@@ -148,8 +148,8 @@ const About = () => {
               The passionate individuals driving our mission forward
             </p>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="flex justify-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 justify-center">
             {team.map((member, index) => (
               <div
                 key={index}
@@ -172,6 +172,7 @@ const About = () => {
               </div>
             ))}
           </div>
+        </div>
         </div>
       </section>
 
