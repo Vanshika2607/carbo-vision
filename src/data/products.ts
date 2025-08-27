@@ -93,7 +93,7 @@ export const products: Product[] = [
     images: [
       'https://i.postimg.cc/hjHMpFD8/iot-curtains.jpg'
     ],
-    description: 'Want your curtains to be controlled through voice or remote .. Try these',
+    description: 'Want your office/home to be automated through voice or remote .. Try these',
     features: [
        'Mobile App Control',
 'Voice Assistant Integration',
