@@ -3,14 +3,6 @@ import { Award, Users, Lightbulb, Target } from "lucide-react";
 
 const About = () => {
   const team = [
-    // {
-    //   name: "Dr.(Prof) Rajneesh Talwar",
-    //   role: "Dean DICE",
-    //   image:
-    //     "https://i.postimg.cc/Mp6F6hBy/Screenshot-2025-08-12-192825.png",
-    //   description:
-    //     "Ph.D. in Electrical Engineering with 15+ years in sustainable technology",
-    // },
     {
       name: "Dr. Manvinder Sharma",
       role: "Associate Professor",
@@ -25,13 +17,6 @@ const About = () => {
         "https://images.pexels.com/photos/3823488/pexels-photo-3823488.jpeg",
       description: "Expert in motor control systems and battery management",
     },
-    // {
-    //   name: "Sarah Johnson",
-    //   role: "Operations Manager",
-    //   image:
-    //     "https://images.pexels.com/photos/3756679/pexels-photo-3756679.jpeg",
-    //   description: "Ensuring quality and efficient delivery of all projects",
-    // },
   ];
 
   return (
