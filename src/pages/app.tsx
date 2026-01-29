@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { User, Phone, Mail, Upload, MessageSquare, ShoppingBag, Globe, Smartphone, Settings, Shield, Check, FileText, MapPin } from 'lucide-react';
 
 interface FormData {
@@ -13,6 +14,8 @@ interface FormData {
 }
 
 function App() {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState<FormData>({
     name: '',
     phone: '',
@@ -30,6 +33,7 @@ function App() {
   const [uploadedAddressProof, setUploadedAddressProof] = useState<File | null>(null);
   const [customDescription, setCustomDescription] = useState('');
   const [websiteDescription, setWebsiteDescription] = useState('');
+  const [appDescription, setAppDescription] = useState('');
   const [captchaKey, setCaptchaKey] = useState(0);
 
   // Generate simple captcha with better logic
@@ -66,11 +70,16 @@ function App() {
   ];
 
   const handleInputChange = (field: string, value: string | boolean) => {
+    if (field === 'helpType' && value === 'buy-items') {
+      navigate('/products');
+      return;
+    }
+
     setFormData(prev => ({
       ...prev,
       [field]: value
     }));
-    
+
     // Clear error when user starts typing
     if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: '' }));
@@ -129,6 +138,10 @@ function App() {
       newErrors.websiteDescription = 'Please provide website requirements';
     }
 
+    if (formData.helpType === 'make-app' && !appDescription.trim()) {
+      newErrors.appDescription = 'Please provide app requirements';
+    }
+
     if (formData.helpType === 'customize-things') {
       if (!customDescription.trim()) {
         newErrors.customDescription = 'Please provide customization details';
@@ -167,7 +180,8 @@ function App() {
       uploadedFile: uploadedFile?.name || null,
       uploadedAddressProof: uploadedAddressProof?.name || null,
       customDescription: formData.helpType === 'customize-things' ? customDescription : null,
-      websiteDescription: formData.helpType === 'make-websites' ? websiteDescription : null
+      websiteDescription: formData.helpType === 'make-websites' ? websiteDescription : null,
+      appDescription: formData.helpType === 'make-app' ? appDescription : null
     };
     
     console.log('Form submitted:', submissionData);
@@ -428,6 +442,35 @@ function App() {
                     placeholder="Describe your website requirements (e.g., type of website, features needed, design preferences, etc.)..."
                   />
                   {errors.websiteDescription && <p className="mt-1 text-sm text-red-600">⚠️ {errors.websiteDescription}</p>}
+                </div>
+              )}
+
+              {/* App Description */}
+              {formData.helpType === 'make-app' && (
+                <div className="animate-in slide-in-from-top-5 duration-300 bg-gradient-to-r from-blue-50 to-cyan-50 p-4 rounded-xl border-2 border-blue-200">
+                  <h4 className="text-lg font-bold text-gray-900 mb-2 flex items-center">
+                    <Smartphone className="w-5 h-5 mr-2 text-blue-600" />
+                    App Requirements
+                  </h4>
+                  <label htmlFor="appDescription" className="block text-sm font-semibold text-gray-800 mb-2">
+                    Please describe your app requirements *
+                  </label>
+                  <textarea
+                    id="appDescription"
+                    value={appDescription}
+                    onChange={(e) => {
+                      setAppDescription(e.target.value);
+                      if (errors.appDescription) {
+                        setErrors(prev => ({ ...prev, appDescription: '' }));
+                      }
+                    }}
+                    rows={3}
+                    className={`w-full px-3 py-3 border-2 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all ${
+                      errors.appDescription ? 'border-red-500 bg-red-50' : 'border-gray-200 bg-white'
+                    }`}
+                    placeholder="Describe your app requirements (e.g., app type, features needed, target platform - iOS/Android/Web, etc.)..."
+                  />
+                  {errors.appDescription && <p className="mt-1 text-sm text-red-600">⚠️ {errors.appDescription}</p>}
                 </div>
               )}
 
