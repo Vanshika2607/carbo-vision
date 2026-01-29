@@ -128,9 +128,12 @@ const Cart = () => {
                 </div>
               </div>
 
-              <button className="w-full bg-gradient-to-r from-blue-600 to-green-600 text-white py-4 px-6 rounded-lg font-semibold hover:from-blue-700 hover:to-green-700 transition-all duration-200 mb-4">
+              <Link
+                to="/checkout"
+                className="w-full bg-gradient-to-r from-blue-600 to-green-600 text-white py-4 px-6 rounded-lg font-semibold hover:from-blue-700 hover:to-green-700 transition-all duration-200 mb-4 block text-center"
+              >
                 Proceed to Checkout
-              </button>
+              </Link>
 
               <div className="text-center text-sm text-gray-600">
                 <p className="mb-2">✓ Free installation service</p>

@@ -8,6 +8,9 @@ import ProductDetail from './pages/ProductDetail';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Cart from './pages/Cart';
+import Checkout from './pages/Checkout';
+import Payment from './pages/Payment';
+import OrderSuccess from './pages/OrderSuccess';
 import { CartProvider } from './context/CartContext';
 import RegisterForm from './pages/app';
 
@@ -25,6 +28,9 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/cart" element={<Cart />} />
+              <Route path="/checkout" element={<Checkout />} />
+              <Route path="/payment" element={<Payment />} />
+              <Route path="/order-success" element={<OrderSuccess />} />
               <Route path="/register" element={<RegisterForm />} />
             </Routes>
           </main>
