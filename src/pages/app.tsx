@@ -29,6 +29,7 @@ function App() {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [uploadedAddressProof, setUploadedAddressProof] = useState<File | null>(null);
   const [customDescription, setCustomDescription] = useState('');
+  const [websiteDescription, setWebsiteDescription] = useState('');
   const [captchaKey, setCaptchaKey] = useState(0);
 
   // Generate simple captcha with better logic
@@ -124,6 +125,10 @@ function App() {
       newErrors.otherDescription = 'Please provide a description';
     }
 
+    if (formData.helpType === 'make-websites' && !websiteDescription.trim()) {
+      newErrors.websiteDescription = 'Please provide website requirements';
+    }
+
     if (formData.helpType === 'customize-things') {
       if (!customDescription.trim()) {
         newErrors.customDescription = 'Please provide customization details';
@@ -161,7 +166,8 @@ function App() {
       ...formData,
       uploadedFile: uploadedFile?.name || null,
       uploadedAddressProof: uploadedAddressProof?.name || null,
-      customDescription: formData.helpType === 'customize-things' ? customDescription : null
+      customDescription: formData.helpType === 'customize-things' ? customDescription : null,
+      websiteDescription: formData.helpType === 'make-websites' ? websiteDescription : null
     };
     
     console.log('Form submitted:', submissionData);
@@ -396,6 +402,35 @@ function App() {
                 </div>
               )}
 
+              {/* Website Description */}
+              {formData.helpType === 'make-websites' && (
+                <div className="animate-in slide-in-from-top-5 duration-300 bg-gradient-to-r from-green-50 to-blue-50 p-4 rounded-xl border-2 border-green-200">
+                  <h4 className="text-lg font-bold text-gray-900 mb-2 flex items-center">
+                    <Globe className="w-5 h-5 mr-2 text-green-600" />
+                    Website Requirements
+                  </h4>
+                  <label htmlFor="websiteDescription" className="block text-sm font-semibold text-gray-800 mb-2">
+                    Please describe your website requirements *
+                  </label>
+                  <textarea
+                    id="websiteDescription"
+                    value={websiteDescription}
+                    onChange={(e) => {
+                      setWebsiteDescription(e.target.value);
+                      if (errors.websiteDescription) {
+                        setErrors(prev => ({ ...prev, websiteDescription: '' }));
+                      }
+                    }}
+                    rows={3}
+                    className={`w-full px-3 py-3 border-2 rounded-xl focus:ring-2 focus:ring-green-500/20 focus:border-green-500 transition-all ${
+                      errors.websiteDescription ? 'border-red-500 bg-red-50' : 'border-gray-200 bg-white'
+                    }`}
+                    placeholder="Describe your website requirements (e.g., type of website, features needed, design preferences, etc.)..."
+                  />
+                  {errors.websiteDescription && <p className="mt-1 text-sm text-red-600">⚠️ {errors.websiteDescription}</p>}
+                </div>
+              )}
+
               {/* Customization Section */}
               {formData.helpType === 'customize-things' && (
                 <div className="animate-in slide-in-from-top-5 duration-300 bg-gradient-to-br from-purple-50 via-indigo-50 to-blue-50 p-4 rounded-xl border-2 border-purple-200">
@@ -447,7 +482,12 @@ function App() {
                     <textarea
                       id="customDescription"
                       value={customDescription}
-                      onChange={(e) => setCustomDescription(e.target.value)}
+                      onChange={(e) => {
+                        setCustomDescription(e.target.value);
+                        if (errors.customDescription) {
+                          setErrors(prev => ({ ...prev, customDescription: '' }));
+                        }
+                      }}
                       rows={3}
                       className={`w-full px-3 py-3 border-2 rounded-xl focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all ${
                         errors.customDescription ? 'border-red-500 bg-red-50' : 'border-gray-200 bg-white'
