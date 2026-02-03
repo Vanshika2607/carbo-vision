@@ -13,6 +13,7 @@ interface FormData {
   agreeToTerms: boolean;
 }
 
+
 function App() {
   const navigate = useNavigate();
 
@@ -165,30 +166,118 @@ function App() {
     return Object.keys(newErrors).length === 0;
   };
 
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+    
+  //   if (!validateForm()) return;
+
+  //   setIsSubmitting(true);
+    
+  //   // Simulate API call
+  //   await new Promise(resolve => setTimeout(resolve, 2000));
+    
+  //   const submissionData = {
+  //     ...formData,
+  //     uploadedFile: uploadedFile?.name || null,
+  //     uploadedAddressProof: uploadedAddressProof?.name || null,
+  //     customDescription: formData.helpType === 'customize-things' ? customDescription : null,
+  //     websiteDescription: formData.helpType === 'make-websites' ? websiteDescription : null,
+  //     appDescription: formData.helpType === 'make-app' ? appDescription : null
+  //   };
+    
+  //   console.log('Form submitted:', submissionData);
+  //   alert('Registration submitted successfully!');
+    
+  //   setIsSubmitting(false);
+  // };
+
+  const fileToBase64 = (file: File): Promise<{ name: string; type: string; data: string }> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        const result = reader.result as string;
+        // Remove the "data:*/*;base64," prefix to get just the base64 string
+        const base64Data = result.split(',')[1];
+        resolve({
+          name: file.name,
+          type: file.type,
+          data: base64Data
+        });
+      };
+      reader.onerror = error => reject(error);
+    });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!validateForm()) return;
 
+    if (!validateForm()) return;
     setIsSubmitting(true);
-    
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    const submissionData = {
-      ...formData,
-      uploadedFile: uploadedFile?.name || null,
-      uploadedAddressProof: uploadedAddressProof?.name || null,
-      customDescription: formData.helpType === 'customize-things' ? customDescription : null,
-      websiteDescription: formData.helpType === 'make-websites' ? websiteDescription : null,
-      appDescription: formData.helpType === 'make-app' ? appDescription : null
-    };
-    
-    console.log('Form submitted:', submissionData);
-    alert('Registration submitted successfully!');
-    
-    setIsSubmitting(false);
+
+    try {
+      // 1. Prepare Description based on Help Type
+      let description = '';
+      if (formData.helpType === 'others') description = formData.otherDescription;
+      else if (formData.helpType === 'make-websites') description = websiteDescription;
+      else if (formData.helpType === 'make-app') description = appDescription;
+      else if (formData.helpType === 'customize-things') description = customDescription;
+
+      // 2. Convert files to Base64
+      let customFileBase64 = null;
+      if (uploadedFile) {
+        customFileBase64 = await fileToBase64(uploadedFile);
+      }
+
+      let addressProofBase64 = null;
+      if (uploadedAddressProof) {
+        addressProofBase64 = await fileToBase64(uploadedAddressProof);
+      }
+
+      // 3. Construct Payload
+      const payload = {
+        name: formData.name,
+        phone: formData.phone,
+        email: formData.email,
+        address: formData.address,
+        helpType: formData.helpType,
+        description: description,
+        customFile: customFileBase64 ? {
+          name: customFileBase64.name,
+          mimeType: customFileBase64.type,
+          data: customFileBase64.data
+        } : null,
+        addressProof: addressProofBase64 ? {
+          name: addressProofBase64.name,
+          mimeType: addressProofBase64.type,
+          data: addressProofBase64.data
+        } : null
+      };
+
+      // 4. Send to Google Apps Script
+      // IMPORTANT: The Google Apps Script must be deployed as a Web App with access set to "Anyone".
+      // Use text/plain to avoid CORS preflight complex requests, GAS parses this fine.
+      await fetch("https://script.google.com/macros/s/AKfycbxQbctgCZ-VDpMSoy81FUThrN9r40z2ZOs04odeo31L2bLou4Tb4DXM_Xe7vdCgLd7b/exec", {
+        method: "POST",
+        body: JSON.stringify(payload),
+        headers: {
+            "Content-Type": "text/plain;charset=utf-8",
+        },
+      });
+
+      alert("✅ Submitted successfully!");
+      
+      // Optional: Reset form here
+      
+    } catch (error) {
+      console.error(error);
+      alert("❌ Submission failed");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 py-6 px-4">
