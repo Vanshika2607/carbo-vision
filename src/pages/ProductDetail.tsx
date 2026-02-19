@@ -101,11 +101,7 @@ const ProductDetail = () => {
                       {product.rating} ({product.reviews} reviews)
                     </span>
                   </div>
-                  <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                    product.inStock ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-                  }`}>
-                    {product.inStock ? 'In Stock' : 'Out of Stock'}
-                  </span>
+                 
                 </div>
               </div>
 
@@ -148,7 +144,7 @@ const ProductDetail = () => {
                 </div>
                 <button
                   onClick={handleAddToCart}
-                  disabled={!product.inStock}
+                  
                   className="flex-1 bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors inline-flex items-center justify-center"
                 >
                   <ShoppingCart className="h-5 w-5 mr-2" />

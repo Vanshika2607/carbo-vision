@@ -11,6 +11,7 @@ export interface Product {
   specifications: {
     [key: string]: string;
   };
+  inStock: boolean;
   rating: number;
   reviews: number;
 }
@@ -20,8 +21,8 @@ export const products: Product[] = [
     id: '1',
     name: 'E-Bike',
     category: 'bike-conversion',
-    price: 60000,
-    originalPrice: 90000,
+    price: 90000,
+    originalPrice: 100000,
     image: 'https://i.postimg.cc/x8Cj3WZj/e-bike-0.jpg',
     images: [
       'https://i.postimg.cc/x8Cj3WZj/e-bike-0.jpg',
@@ -45,6 +46,7 @@ export const products: Product[] = [
 'Brakes': 'Front & rear disc brakes',
 'Frame': 'Original bike frame with minimal modifications'
     },
+    inStock: true,
     rating: 4.8,
     reviews: 127
   },
@@ -77,6 +79,7 @@ export const products: Product[] = [
 'Frame': 'Lightweight, off-road capable',
 'Wheels': '3-wheel with suspension for stability'
     },
+    inStock: true,
     rating: 4.6,
     reviews: 89
   },
@@ -110,6 +113,7 @@ export const products: Product[] = [
 'Curtain Type': 'Supports rods, rails, tracks',
 'Price': 'Rs. 5000/window',
     },
+    inStock: true,
     rating: 4.9,
     reviews: 156
   },
@@ -143,6 +147,7 @@ export const products: Product[] = [
 'Material':	'Aluminum/Steel frame with weather‑resistant coating',
 'Applications':	'Schools, Public Spaces, Offices, Transportation Hubs'
     },
+    inStock: true,
     rating: 4.4,
     reviews: 73
   },
@@ -175,6 +180,7 @@ export const products: Product[] = [
 'Automation': 'Auto open/close based on traffic input',
 'App Interface': 'Live monitoring and alerts via mobile/web',
     },
+    inStock: true,
     rating: 4.7,
     reviews: 94
   },
@@ -211,6 +217,7 @@ export const products: Product[] = [
 'Brakes': 'Dual disc brakes (front & rear)',
 'Charging Time': '4–6 hours'
     },
+    inStock: true,
     rating: 4.5,
     reviews: 45
   },
@@ -243,6 +250,7 @@ export const products: Product[] = [
 'Frame': 'Foldable aluminum alloy, lightweight (~12–15 kg)',
 'Brakes': 'Electronic + rear disc or foot brake'
     },
+    inStock: true,
     rating: 4.5,
     reviews: 45
   },
@@ -277,6 +285,7 @@ export const products: Product[] = [
 'Mobile App':	'Health data dashboard, alerts, battery status, live location'
 
     },
+    inStock: true,
     rating: 4.5,
     reviews: 45
   },
@@ -310,10 +319,11 @@ export const products: Product[] = [
 'Security': 'Smart locks, CCTV, access alerts',
 'Energy Monitoring': 'Real-time power usage tracking'
     },
+    inStock: true,
     rating: 4.5,
     reviews: 45
   },
-  {
+    {
     id: '10',
     name: 'GIS For Fields',
     category: 'cycle-conversion',
@@ -343,6 +353,7 @@ export const products: Product[] = [
 'Brakes': 'Dual disc brakes (front & rear)',
 'Charging Time': '4–6 hours'
     },
+    inStock : true,
     rating: 4.5,
     reviews: 45
   }
