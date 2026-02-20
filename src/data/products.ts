@@ -121,7 +121,7 @@ export const products: Product[] = [
     id: '4',
     name: 'Smart Display',
     category: 'cycle-conversion',
-    price: 9000,
+    price: 10000,
     originalPrice: 12000,
     image: 'https://i.postimg.cc/zXqT5Dcb/electric-matrix-notice-board.jpg',
     images: [
@@ -188,7 +188,7 @@ export const products: Product[] = [
     id: '6',
     name: 'E-Cycle',
     category: 'cycle-conversion',
-    price: 21000,
+    price: 20000,
     originalPrice: 23000,
     image: 'https://i.postimg.cc/9MpFB2tK/e-cycle-0.jpg',
     images: [
@@ -325,7 +325,7 @@ export const products: Product[] = [
   },
     {
     id: '10',
-    name: 'GIS For Fields',
+    name: 'Smart GIS and Field Monitoring System',
     category: 'cycle-conversion',
     price: 21000,
     originalPrice: 23000,
@@ -345,13 +345,13 @@ export const products: Product[] = [
       'Easy Maintenance'
     ],
     specifications: {
-      'Motor': '250W brushless hub motor',
-'Battery': '36V, 10.4Ah lithium-ion (removable)',
-'Range': 'Up to 60 km per charge (pedal assist mode)',
-'Top Speed': '25 km/h (as per Indian regulations)',
-'Frame': 'Lightweight aluminum alloy',
-'Brakes': 'Dual disc brakes (front & rear)',
-'Charging Time': '4–6 hours'
+    'Sensors Included': 'Soil Moisture Sensor, Temperature & Humidity Sensor (DHT22), pH Sensor, NPK Sensor (Optional Advanced Version)',
+'Connectivity':'Wi-Fi, GSM Module (SIM800L) for remote areas',
+'GIS Integration':'Google Maps API / Leaflet.js, Field mapping & zone marking',
+'Real-time Monitoring':'Live sensor data updates, Alert system for abnormal conditions',
+'System Accuracy': 'Disease detection accuracy: ~85–92% (depending on training data)',
+'Power Backup': '8–12 hours continuous monitoring',
+'Weather Resistance': 'IP65 enclosure'
     },
     inStock : true,
     rating: 4.5,
