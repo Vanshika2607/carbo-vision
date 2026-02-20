@@ -356,6 +356,42 @@ export const products: Product[] = [
     inStock : true,
     rating: 4.5,
     reviews: 45
+  },
+  {
+    id: '11',
+    name: 'Smart Mirror',
+    category: 'bike-conversion',
+    price: 10000,
+    originalPrice: 12000,
+    image: 'https://i.postimg.cc/GmsyBFqd/Whats-App-Image-2026-02-20-at-2-09-49-PM.jpg',
+    images: [
+      'https://i.postimg.cc/zDtb0tQH/Whats-App-Image-2026-02-20-at-2-09-39-PM.jpg',
+       'https://i.postimg.cc/GmsyBFqd/Whats-App-Image-2026-02-20-at-2-09-49-PM.jpg'
+    ],
+    description: 'Transform your home or office with an intelligent smart mirror that displays useful information and supports voice control.',
+
+features: [
+   'Real-time Clock and Date Display',
+   'Weather Updates and Forecast',
+   'Voice Assistant Integration',
+   'Smart Home Device Control',
+   'News and Notification Display',
+   'Customizable Dashboard',
+   'Touchscreen Support (optional)',
+   'Modern and Space-saving Design',
+],
+specifications: {
+  'Display': 'LED / LCD screen behind two-way mirror',
+  'Control': 'Voice, touch, or mobile app (Alexa, Google, Siri)',
+  'Connectivity': 'Wi-Fi / Bluetooth',
+  'Processor': 'Raspberry Pi / Mini PC',
+  'Power': 'AC power supply',
+  'Features Support': 'Weather, calendar, news, automation',
+  'Installation': 'Wall-mounted or frame-mounted'
+},
+    inStock: true,
+    rating: 4.8,
+    reviews: 200
   }
 ];
 
