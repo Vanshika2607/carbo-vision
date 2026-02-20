@@ -87,8 +87,8 @@ export const products: Product[] = [
     id: '3',
     name: 'Smart Curtains',
     category: 'bike-conversion',
-    price: 6000,
-    originalPrice: 8000,
+    price: 10000,
+    originalPrice: 12000,
     image: 'https://i.postimg.cc/hjHMpFD8/iot-curtains.jpg',
     images: [
       'https://i.postimg.cc/hjHMpFD8/iot-curtains.jpg'
