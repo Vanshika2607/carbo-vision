@@ -361,8 +361,8 @@ export const products: Product[] = [
     id: '11',
     name: 'Smart Mirror',
     category: 'bike-conversion',
-    price: 10000,
-    originalPrice: 12000,
+    price: 20000,
+    originalPrice: 22000,
     image: 'https://i.postimg.cc/GmsyBFqd/Whats-App-Image-2026-02-20-at-2-09-49-PM.jpg',
     images: [
       'https://i.postimg.cc/zDtb0tQH/Whats-App-Image-2026-02-20-at-2-09-39-PM.jpg',

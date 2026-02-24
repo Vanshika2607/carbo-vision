@@ -1,10 +1,27 @@
-//import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Zap, Leaf, Award, Users } from 'lucide-react';
 import { products } from '../data/products';
 
 const Home = () => {
-  const featuredProducts = products.slice(0, 3);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const itemsPerPage = 3;
+  const totalProducts = products.length;
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + itemsPerPage) % totalProducts);
+    }, 3000);
+
+    return () => clearInterval(timer);
+  }, [totalProducts]);
+
+  const featuredProducts = products.slice(currentIndex, currentIndex + itemsPerPage);
+  
+  // If we're at the end and don't have enough items for a full page, wrap around
+  if (featuredProducts.length < itemsPerPage) {
+    featuredProducts.push(...products.slice(0, itemsPerPage - featuredProducts.length));
+  }
 
   return (
     <div>
@@ -25,7 +42,7 @@ const Home = () => {
                 to="/products"
                 className="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors inline-flex items-center justify-center"
               >
-                Shop Conversion Kits
+                All Products
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
               <Link
@@ -51,7 +68,7 @@ const Home = () => {
             </h2>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 transition-opacity duration-500 ease-in-out" key={currentIndex}>
             {featuredProducts.map((product) => (
               <div key={product.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
                 <img
