@@ -11,15 +11,14 @@ const Home = () => {
       {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-blue-600 via-blue-700 to-green-600 text-white">
         <div className="absolute inset-0 bg-black opacity-20"></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="text-center">
-            <h4 className="text-4xl md:text-6xl font-bold mb-6 block text-yellow-300">
-              Your Problems, Our Solutions, Services Beyond Expectations.
+            <h4 className="text-4xl md:text-4.5xl font-bold mb-6 block text-yellow-300">
+              Are you looking for Smart Solutions - here's the right place .
               {/* <h4><span className="block text-yellow-300"> Websites That Wow </span></h4> */}
             </h4>
             <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
-              “Why settle for ordinary? Go electric, go digital, and grab genius-level innovations — 
-              straight from the minds of tomorrow’s creators.”
+              “Why settle for oridinary ? Go electric, go digital, and grab genius-level innovations - direct from future creators .”
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
@@ -40,56 +39,8 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Why Choose Carbo Vision?
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Because We Don't Just Build - We Transform . We turn wild ideas into real-world solutions - from electrifying your ride to crafting custom websites .
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="text-center p-6 rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 hover:shadow-lg transition-shadow">
-              <div className="bg-blue-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Zap className="h-8 w-8 text-white" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">High Performance</h3>
-              <p className="text-gray-600">Powerful motors and long-lasting batteries for superior performance</p>
-            </div>
-            
-            <div className="text-center p-6 rounded-xl bg-gradient-to-br from-green-50 to-green-100 hover:shadow-lg transition-shadow">
-              <div className="bg-green-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Leaf className="h-8 w-8 text-white" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Eco-Friendly</h3>
-              <p className="text-gray-600">Reduce carbon footprint with sustainable electric transportation</p>
-            </div>
-            
-            <div className="text-center p-6 rounded-xl bg-gradient-to-br from-orange-50 to-orange-100 hover:shadow-lg transition-shadow">
-              <div className="bg-orange-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Award className="h-8 w-8 text-white" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Quality Assured</h3>
-              <p className="text-gray-600">Premium components with comprehensive warranty coverage</p>
-            </div>
-            
-            <div className="text-center p-6 rounded-xl bg-gradient-to-br from-purple-50 to-purple-100 hover:shadow-lg transition-shadow">
-              <div className="bg-purple-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Users className="h-8 w-8 text-white" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Expert Support</h3>
-              <p className="text-gray-600">Professional installation and ongoing technical support</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Featured Products */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-8 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
@@ -143,6 +94,55 @@ const Home = () => {
               View All Products
               <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
+          </div>
+        </div>
+      </section>
+
+
+      {/* Features Section */}
+      <section className="py-6 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Why Choose Carbo Vision?
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            Because We Don't Just Build - We Transform . We turn wild ideas into real-world solutions - from electrifying your ride to crafting custom websites .
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="text-center p-6 rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 hover:shadow-lg transition-shadow">
+              <div className="bg-blue-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Zap className="h-8 w-8 text-white" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">High Performance</h3>
+              <p className="text-gray-600">Powerful motors and long-lasting batteries for superior performance</p>
+            </div>
+            
+            <div className="text-center p-6 rounded-xl bg-gradient-to-br from-green-50 to-green-100 hover:shadow-lg transition-shadow">
+              <div className="bg-green-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Leaf className="h-8 w-8 text-white" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Eco-Friendly</h3>
+              <p className="text-gray-600">Reduce carbon footprint with sustainable electric transportation</p>
+            </div>
+            
+            <div className="text-center p-6 rounded-xl bg-gradient-to-br from-orange-50 to-orange-100 hover:shadow-lg transition-shadow">
+              <div className="bg-orange-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Award className="h-8 w-8 text-white" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Quality Assured</h3>
+              <p className="text-gray-600">Premium components with comprehensive warranty coverage</p>
+            </div>
+            
+            <div className="text-center p-6 rounded-xl bg-gradient-to-br from-purple-50 to-purple-100 hover:shadow-lg transition-shadow">
+              <div className="bg-purple-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Users className="h-8 w-8 text-white" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Expert Support</h3>
+              <p className="text-gray-600">Professional installation and ongoing technical support</p>
+            </div>
           </div>
         </div>
       </section>
