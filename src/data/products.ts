@@ -87,8 +87,8 @@ export const products: Product[] = [
     id: '3',
     name: 'Smart Curtains',
     category: 'bike-conversion',
-    price: 10000,
-    originalPrice: 12000,
+    price: 20000,
+    originalPrice: 22000,
     image: 'https://i.postimg.cc/hjHMpFD8/iot-curtains.jpg',
     images: [
       'https://i.postimg.cc/hjHMpFD8/iot-curtains.jpg'
@@ -121,8 +121,8 @@ export const products: Product[] = [
     id: '4',
     name: 'Smart Display',
     category: 'cycle-conversion',
-    price: 10000,
-    originalPrice: 12000,
+    price: 12000,
+    originalPrice: 15000,
     image: 'https://i.postimg.cc/zXqT5Dcb/electric-matrix-notice-board.jpg',
     images: [
       'https://i.postimg.cc/zXqT5Dcb/electric-matrix-notice-board.jpg'
@@ -155,8 +155,8 @@ export const products: Product[] = [
     id: '5',
     name: 'Smart Barricade',
     category: 'bike-conversion',
-    price: 15000,
-    originalPrice: 17500,
+    price: 20000,
+    originalPrice: 23500,
     image: 'https://i.postimg.cc/fyCtkXr3/Smart-Barricade-0.jpg',
     images: [
       'https://i.postimg.cc/fyCtkXr3/Smart-Barricade-0.jpg'
