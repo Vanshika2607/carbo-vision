@@ -9,13 +9,35 @@ const Contact = () => {
     subject: '',
     message: ''
   });
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw4J3uvqFISO8PQgQmJDg5-fCDHAmvPhGGNuY-ROSxknqWJ-yuOjXix5mGhcYakyAaZ/exec';
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
-    alert('Thank you for your message! We\'ll get back to you soon.');
-    setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+    setStatus('loading');
+
+    try {
+      await fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors', // Important for Google Apps Script
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      // Since mode is 'no-cors', we can't check response.ok, 
+      // but if it doesn't throw, it likely succeeded.
+      console.log('Form submitted successfully');
+      setStatus('success');
+      setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+      setTimeout(() => setStatus('idle'), 5000);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setStatus('error');
+      alert('There was an error sending your message. Please try again later.');
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -209,11 +231,19 @@ const Contact = () => {
 
                 <button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-blue-600 to-green-600 text-white py-4 px-6 rounded-lg font-semibold hover:from-blue-700 hover:to-green-700 transition-all duration-200 inline-flex items-center justify-center"
+                  disabled={status === 'loading'}
+                  className={`w-full bg-gradient-to-r from-blue-600 to-green-600 text-white py-4 px-6 rounded-lg font-semibold hover:from-blue-700 hover:to-green-700 transition-all duration-200 inline-flex items-center justify-center ${
+                    status === 'loading' ? 'opacity-70 cursor-not-allowed' : ''
+                  }`}
                 >
-                  <Send className="h-5 w-5 mr-2" />
-                  Send Message
+                  <Send className={`h-5 w-5 mr-2 ${status === 'loading' ? 'animate-pulse' : ''}`} />
+                  {status === 'loading' ? 'Sending...' : status === 'success' ? 'Message Sent!' : 'Send Message'}
                 </button>
+                {status === 'success' && (
+                  <p className="text-green-600 text-center font-medium animate-bounce mt-4">
+                    Thank you! Your message has been saved to our records.
+                  </p>
+                )}
               </form>
             </div>
           </div>
