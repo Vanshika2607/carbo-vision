@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { ArrowLeft, CreditCard, Building2, Smartphone, CheckCircle } from 'lucide-react';
+import { ArrowLeft, Building2, Smartphone } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 
 interface LocationState {
@@ -32,7 +32,7 @@ interface OrderData {
 const Payment = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { items, total, clearCart } = useCart();
+  const { items, total } = useCart();
   const [selectedPayment, setSelectedPayment] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
 
@@ -57,20 +57,6 @@ const Payment = () => {
       description: 'Pay directly from your bank account',
       icon: Building2,
       color: 'from-blue-500 to-cyan-500'
-    },
-    {
-      id: 'card',
-      name: 'Credit/Debit Card',
-      description: 'Visa, MasterCard, Rupay',
-      icon: CreditCard,
-      color: 'from-orange-500 to-red-500'
-    },
-    {
-      id: 'cod',
-      name: 'Cash on Delivery',
-      description: 'Pay when you receive the product',
-      icon: CheckCircle,
-      color: 'from-gray-600 to-gray-700'
     }
   ];
 
@@ -93,35 +79,12 @@ const Payment = () => {
         pincode: addressData.pincode,
         total_amount: total,
         payment_method: selectedPayment,
-        payment_status: selectedPayment === 'cod' ? 'pending' : 'pending',
+        payment_status: 'pending',
         order_status: 'pending'
       };
 
-      const orderItems = items.map(item => ({
-        product_id: item.id,
-        product_name: item.name,
-        product_image: item.image,
-        quantity: item.quantity,
-        price: item.price,
-        subtotal: item.price * item.quantity
-      }));
-
-      if (selectedPayment === 'cod') {
-        await new Promise(resolve => setTimeout(resolve, 1500));
-
-        console.log('Order placed:', { order: orderData, items: orderItems });
-
-        clearCart();
-        navigate('/order-success', {
-          state: {
-            orderData,
-            paymentMethod: selectedPayment
-          }
-        });
-      } else {
-        const bankUrl = generateBankingURL(selectedPayment, orderData);
-        window.location.href = bankUrl;
-      }
+      const bankUrl = generateBankingURL(selectedPayment, orderData);
+      window.location.href = bankUrl;
     } catch (error) {
       console.error('Payment error:', error);
       alert('Payment failed. Please try again.');
