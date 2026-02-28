@@ -270,7 +270,7 @@ const Checkout = () => {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Shipping</span>
-                  <span className="font-medium text-green-600">Free</span>
+                  <span className="font-medium text-red-600">Excluded</span>
                 </div>
                 <div className="flex justify-between text-lg font-semibold">
                   <span className="text-gray-900">Total</span>
