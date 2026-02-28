@@ -15,6 +15,20 @@ interface LocationState {
   };
 }
 
+interface OrderData {
+  user_name: string;
+  user_email: string | null;
+  user_phone: string;
+  shipping_address: string;
+  city: string;
+  state: string;
+  pincode: string;
+  total_amount: number;
+  payment_method: string;
+  payment_status: string;
+  order_status: string;
+}
+
 const Payment = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -105,7 +119,7 @@ const Payment = () => {
           }
         });
       } else {
-        const bankUrl = generateBankingURL(selectedPayment, orderData, orderItems);
+        const bankUrl = generateBankingURL(selectedPayment, orderData);
         window.location.href = bankUrl;
       }
     } catch (error) {
@@ -115,7 +129,7 @@ const Payment = () => {
     }
   };
 
-  const generateBankingURL = (method: string, orderData: any, items: any[]) => {
+  const generateBankingURL = (method: string, orderData: OrderData) => {
     const baseUrl = window.location.origin;
     const returnUrl = `${baseUrl}/order-success`;
 

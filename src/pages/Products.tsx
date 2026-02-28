@@ -12,6 +12,8 @@ const Products = () => {
     { id: 'all', name: 'All Products', count: products.length },
     { id: 'bike-conversion', name: 'Bike Conversions', count: products.filter(p => p.category === 'bike-conversion').length },
     { id: 'cycle-conversion', name: 'Cycle Conversions', count: products.filter(p => p.category === 'cycle-conversion').length },
+    { id: 'home-automation', name: 'Home Automation', count: products.filter(p => p.category === 'home-automation').length },
+    { id: 'other smart-products', name: 'Other Smart Products', count: products.filter(p => p.category === 'other smart-products').length },
   ];
 
   const filteredProducts = getProductsByCategory(selectedCategory);

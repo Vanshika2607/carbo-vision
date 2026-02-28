@@ -1,7 +1,7 @@
 export interface Product {
   id: string;
   name: string;
-  category: 'bike-conversion' | 'cycle-conversion';
+  category: 'bike-conversion' | 'cycle-conversion' | 'home-automation' | 'other smart-products';
   price: number;
   originalPrice?: number;
   image: string;
@@ -86,7 +86,7 @@ export const products: Product[] = [
   {
     id: '3',
     name: 'Smart Curtains',
-    category: 'bike-conversion',
+    category: 'home-automation',
     price: 20000,
     originalPrice: 22000,
     image: 'https://i.postimg.cc/hjHMpFD8/iot-curtains.jpg',
@@ -120,7 +120,7 @@ export const products: Product[] = [
   {
     id: '4',
     name: 'Smart Display',
-    category: 'cycle-conversion',
+    category: 'other smart-products',
     price: 12000,
     originalPrice: 15000,
     image: 'https://i.postimg.cc/zXqT5Dcb/electric-matrix-notice-board.jpg',
@@ -154,7 +154,7 @@ export const products: Product[] = [
   {
     id: '5',
     name: 'Smart Barricade',
-    category: 'bike-conversion',
+    category: 'other smart-products',
     price: 20000,
     originalPrice: 23500,
     image: 'https://i.postimg.cc/fyCtkXr3/Smart-Barricade-0.jpg',
@@ -224,7 +224,7 @@ export const products: Product[] = [
   {
     id: '7',
     name: 'Electric Kick Scooter',
-    category: 'cycle-conversion',
+    category: 'bike-conversion',
     price: 30000,
     originalPrice: 32000,
     image: 'https://i.postimg.cc/J7dwqvZt/electric-scooter-0.jpg',
@@ -292,7 +292,7 @@ export const products: Product[] = [
   {
     id: '9',
     name: 'Office/Home Automation',
-    category: 'cycle-conversion',
+    category: 'home-automation',
     price: 15000,
     originalPrice: 17000,
     image: 'https://i.postimg.cc/8cv4QZPQ/Screenshot-2025-08-05-184526.png',
@@ -326,7 +326,7 @@ export const products: Product[] = [
     {
     id: '10',
     name: 'Smart GIS and Field Monitoring System',
-    category: 'cycle-conversion',
+    category: 'other smart-products',
     price: 21000,
     originalPrice: 23000,
     image: 'https://i.postimg.cc/X7SPT6sG/Whats-App-Image-2026-02-17-at-5-03-54-PM.jpg',
@@ -360,7 +360,7 @@ export const products: Product[] = [
   {
     id: '11',
     name: 'Smart Mirror',
-    category: 'bike-conversion',
+    category: 'home-automation',
     price: 20000,
     originalPrice: 22000,
     image: 'https://i.postimg.cc/GmsyBFqd/Whats-App-Image-2026-02-20-at-2-09-49-PM.jpg',
