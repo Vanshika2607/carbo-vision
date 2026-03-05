@@ -2,6 +2,14 @@ import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ArrowLeft, Building2, Smartphone } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { postOrderToGoogleSheet } from '../utils/orderWebhook';
+
+// Razorpay interface definition for window
+declare global {
+  interface Window {
+    Razorpay: any;
+  }
+}
 
 interface LocationState {
   addressData: {
@@ -13,20 +21,6 @@ interface LocationState {
     state: string;
     pincode: string;
   };
-}
-
-interface OrderData {
-  user_name: string;
-  user_email: string | null;
-  user_phone: string;
-  shipping_address: string;
-  city: string;
-  state: string;
-  pincode: string;
-  total_amount: number;
-  payment_method: string;
-  payment_status: string;
-  order_status: string;
 }
 
 const Payment = () => {
@@ -80,38 +74,69 @@ const Payment = () => {
         total_amount: total,
         payment_method: selectedPayment,
         payment_status: 'pending',
-        order_status: 'pending'
+        order_status: 'pending',
+        items: items
       };
 
-      const bankUrl = generateBankingURL(selectedPayment, orderData);
-      window.location.href = bankUrl;
+      if (selectedPayment === 'upi') {
+        const options = {
+          // A placeholder key since we don't have the user's specific API key yet
+          key: "rzp_test_YOUR_RAZORPAY_KEY", 
+          amount: total * 100, // Amount is in currency subunits (paise)
+          currency: "INR",
+          name: "Carbo Vision",
+          description: "Purchase from Carbo Vision",
+          image: "https://example.com/your_logo", // Optional logo
+          handler: async function (response: any) {
+            // Payment succeeded 
+            // Send entire order data + razorpay ID to the Google Sheets webhook 
+            await postOrderToGoogleSheet({
+              ...orderData,
+              payment_status: 'completed',
+              order_status: 'confirmed',
+              payment_id: response.razorpay_payment_id
+            });
+            
+            // Navigate to success screen
+            navigate('/order-success');
+          },
+          prefill: {
+            name: orderData.user_name,
+            email: orderData.user_email || "",
+            contact: orderData.user_phone,
+          },
+          notes: {
+            address: orderData.shipping_address,
+          },
+          theme: {
+            color: "#3399cc",
+          },
+          modal: {
+            ondismiss: function() {
+              setIsProcessing(false);
+            }
+          }
+        };
+
+        const rzp1 = new window.Razorpay(options);
+        rzp1.on('payment.failed', function (response: any){
+          alert("Payment failed: " + response.error.description);
+          setIsProcessing(false);
+        });
+        
+        rzp1.open();
+
+      } else {
+        // Fallback for Net Banking / Manual methods (Or Razorpay simply handles both)
+        alert('Currently only UPI via Razorpay is strongly supported in this flow.');
+        setIsProcessing(false);
+      }
+      
     } catch (error) {
       console.error('Payment error:', error);
       alert('Payment failed. Please try again.');
       setIsProcessing(false);
     }
-  };
-
-  const generateBankingURL = (method: string, orderData: OrderData) => {
-    const baseUrl = window.location.origin;
-    const returnUrl = `${baseUrl}/order-success`;
-
-    const params = new URLSearchParams({
-      amount: total.toString(),
-      order_id: Date.now().toString(),
-      customer_name: orderData.user_name,
-      customer_phone: orderData.user_phone,
-      return_url: returnUrl,
-      payment_method: method
-    });
-
-    const mockBankUrls: Record<string, string> = {
-      upi: 'https://payment-demo.example.com/upi',
-      netbanking: 'https://payment-demo.example.com/netbanking',
-      card: 'https://payment-demo.example.com/card'
-    };
-
-    return `${mockBankUrls[method] || mockBankUrls.upi}?${params.toString()}`;
   };
 
   return (
