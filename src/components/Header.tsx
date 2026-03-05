@@ -1,12 +1,15 @@
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ShoppingCart, Zap } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Menu, X, ShoppingCart, Zap, LogOut, User } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const { items } = useCart();
+  const { currentUser, logout } = useAuth();
 
   const navigation = [
     { name: 'Home', href: '/' },
@@ -52,6 +55,35 @@ const Header = () => {
 
           {/* Cart & Mobile Menu */}
           <div className="flex items-center space-x-4">
+            {currentUser ? (
+              <div className="hidden md:flex items-center space-x-4 bg-gray-50 px-3 py-1.5 rounded-full border border-gray-200">
+                <span className="text-sm font-semibold text-gray-700 flex items-center gap-2">
+                  <div className="bg-blue-100 p-1 rounded-full">
+                    <User className="w-4 h-4 text-blue-600" />
+                  </div>
+                  {currentUser.name}
+                </span>
+                <div className="w-px h-4 bg-gray-300"></div>
+                <button
+                  onClick={() => {
+                    logout();
+                    navigate('/');
+                  }}
+                  className="flex items-center gap-1 text-sm font-medium text-red-500 hover:text-red-700 transition-colors"
+                  title="Log out"
+                >
+                  <LogOut className="w-4 h-4" />
+                </button>
+              </div>
+            ) : (
+              <Link
+                to="/login"
+                className="hidden md:flex items-center justify-center px-4 py-2 rounded-lg text-sm font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 transition-all shadow-md transform hover:scale-105"
+              >
+                Sign In
+              </Link>
+            )}
+
             <Link
               to="/cart"
               className="relative p-2 text-gray-700 hover:text-blue-600 transition-colors"
@@ -76,7 +108,7 @@ const Header = () => {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden py-4 border-t border-gray-200">
+          <div className="md:hidden py-4 border-t border-gray-200 space-y-2">
             {navigation.map((item) => (
               <Link
                 key={item.name}
@@ -91,6 +123,34 @@ const Header = () => {
                 {item.name}
               </Link>
             ))}
+            {/* Mobile Auth Button */}
+            <div className="px-3 pt-4 pb-2 border-t border-gray-100">
+              {currentUser ? (
+                <div className="flex items-center justify-between">
+                  <span className="text-base font-medium text-gray-800 flex items-center gap-2">
+                    <User className="w-5 h-5 text-blue-600" /> {currentUser.name}
+                  </span>
+                  <button
+                    onClick={() => {
+                      logout();
+                      setIsMenuOpen(false);
+                      navigate('/');
+                    }}
+                    className="flex items-center gap-2 px-3 py-2 rounded-md text-base font-medium text-red-600 hover:bg-red-50 transition-colors"
+                  >
+                    <LogOut className="w-5 h-5" /> Logout
+                  </button>
+                </div>
+              ) : (
+                <Link
+                  to="/login"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="block w-full text-center px-3 py-3 rounded-lg text-base font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 transition-colors shadow-md"
+                >
+                  Sign In
+                </Link>
+              )}
+            </div>
           </div>
         )}
       </div>
