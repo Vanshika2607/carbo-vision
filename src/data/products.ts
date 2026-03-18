@@ -121,8 +121,8 @@ export const products: Product[] = [
     id: '4',
     name: 'Smart Display',
     category: 'other smart-products',
-    price: 12000,
-    originalPrice: 15000,
+    price: 15000,
+    originalPrice: 17000,
     image: 'https://i.postimg.cc/zXqT5Dcb/electric-matrix-notice-board.jpg',
     images: [
       'https://i.postimg.cc/zXqT5Dcb/electric-matrix-notice-board.jpg'
@@ -188,8 +188,8 @@ export const products: Product[] = [
     id: '6',
     name: 'E-Cycle',
     category: 'cycle-conversion',
-    price: 20000,
-    originalPrice: 23000,
+    price: 25000,
+    originalPrice: 27000,
     image: 'https://i.postimg.cc/9MpFB2tK/e-cycle-0.jpg',
     images: [
       'https://i.postimg.cc/9MpFB2tK/e-cycle-0.jpg',
@@ -258,8 +258,8 @@ export const products: Product[] = [
     id: '8',
     name: 'Smart Wheel Chair',
     category: 'cycle-conversion',
-    price: 40000,
-    originalPrice: 44000,
+    price: 46000,
+    originalPrice: 49000,
     image: 'https://i.postimg.cc/0yRBXsQ5/electric-wheel-chair.jpg',
     images: [
       'https://i.postimg.cc/0yRBXsQ5/electric-wheel-chair.jpg'
@@ -361,8 +361,8 @@ export const products: Product[] = [
     id: '11',
     name: 'Smart Mirror',
     category: 'home-automation',
-    price: 20000,
-    originalPrice: 22000,
+    price: 30000,
+    originalPrice: 33000,
     image: 'https://i.postimg.cc/GmsyBFqd/Whats-App-Image-2026-02-20-at-2-09-49-PM.jpg',
     images: [
       'https://i.postimg.cc/zDtb0tQH/Whats-App-Image-2026-02-20-at-2-09-39-PM.jpg',
