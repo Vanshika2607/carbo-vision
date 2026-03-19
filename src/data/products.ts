@@ -300,7 +300,7 @@ export const products: Product[] = [
       'https://i.postimg.cc/8cv4QZPQ/Screenshot-2025-08-05-184526.png',
       'https://i.postimg.cc/FHpZ4dmR/Screenshot-2025-08-05-184659.png'
     ],
-    description: 'Convert Your Home Into Smart Home/Office . (1500/- for 3 plugs)',
+    description: 'Convert Your Home Into Smart Home/Office. (15000/- for 3 plugs)',
     features: [
       'Centralized Smart Control',
       'Automation & Scheduling',
