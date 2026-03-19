@@ -83,7 +83,7 @@ const Home = () => {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + itemsPerPage) % totalProducts);
-    }, 3000);
+    }, 6500);
     return () => clearInterval(timer);
   }, [totalProducts]);
 
