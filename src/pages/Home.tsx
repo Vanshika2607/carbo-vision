@@ -1,7 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Zap, Leaf, Award, Users, Eye, MapPin, Briefcase, X } from 'lucide-react';
+import { 
+  ArrowRight, Zap, Leaf, Award, Users, MapPin, 
+  Briefcase, X, Star, ShieldCheck 
+} from 'lucide-react';
 import { products } from '../data/products';
+import ProductCard from '../components/ProductCard';
 
 // ─── Replace this with your deployed Apps Script Web App URL ───────────────
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxh4p2B5bYCu4C7DhHME2iaLMpRQLguaiK-iUXLNr_VkzWFQvY7Kx3UIM3AUhYS1AT7nQ/exec';
@@ -37,10 +41,11 @@ interface GpsResult {
 
 const Home = () => {
   const [currentIndex, setCurrentIndex]     = useState(0);
-  const [visitorCount, setVisitorCount]     = useState<number | null>(null);
+  const [heroIndex, setHeroIndex]           = useState(0);
+  const [heroVisible, setHeroVisible]       = useState(true);
 
-  // Popup state
-  const [showModal, setShowModal]           = useState(true);
+  // Popup state - now hidden by default
+  const [showModal, setShowModal]           = useState(false);
   const [occupation, setOccupation]         = useState('');
   const [customOccupation, setCustomOccupation] = useState('');
 
@@ -79,13 +84,25 @@ const Home = () => {
     );
   }, []);
 
-  // ── 2. Carousel timer ─────────────────────────────────────────────────
+  // ── 2. Carousel timer (featured products grid) ───────────────────────
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + itemsPerPage) % totalProducts);
     }, 6500);
     return () => clearInterval(timer);
   }, [totalProducts]);
+
+  // ── 2b. Hero product slideshow every 6s with crossfade ───────────────
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setHeroVisible(false);
+      setTimeout(() => {
+        setHeroIndex((prev) => (prev + 1) % products.length);
+        setHeroVisible(true);
+      }, 400);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, []);
 
   // ── 3. Send visitor data after popup is submitted ─────────────────────
   const handleSubmit = async (skip: boolean) => {
@@ -114,14 +131,12 @@ const Home = () => {
     };
 
     try {
-      const res  = await fetch(APPS_SCRIPT_URL, {
+      await fetch(APPS_SCRIPT_URL, {
         method:   'POST',
         headers:  { 'Content-Type': 'text/plain;charset=utf-8' },
         body:     JSON.stringify(payload),
         redirect: 'follow',
       });
-      const json = await res.json();
-      if (json.totalVisitors !== undefined) setVisitorCount(json.totalVisitors);
     } catch { /* silently fail */ }
   };
 
@@ -237,178 +252,287 @@ const Home = () => {
       )}
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-blue-600 via-blue-700 to-green-600 text-white">
-        <div className="absolute inset-0 bg-black opacity-20"></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="text-center">
-            <h4 className="text-4xl md:text-4.5xl font-bold mb-6 block text-yellow-300">
-              Are you looking for Smart Solutions - here's the right place .
-            </h4>
-            <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
-              "Why settle for oridinary ? Go electric, go digital, and grab genius-level innovations - direct from future creators ."
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                to="/products"
-                className="bg-white text-blue-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors inline-flex items-center justify-center"
-              >
-                All Products
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-              <Link
-                to="/about"
-                className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-blue-600 transition-colors inline-flex items-center justify-center"
-              >
-                Learn More
-              </Link>
+      <section className="relative overflow-hidden bg-brand-dark pt-12 pb-16 md:pt-16 md:pb-20">
+        {/* Background Patterns */}
+        <div className="absolute inset-0 z-0">
+          <div className="absolute top-0 left-1/4 w-72 h-72 bg-brand-primary/20 rounded-full blur-[100px]"></div>
+          <div className="absolute bottom-0 right-1/4 w-72 h-72 bg-brand-secondary/10 rounded-full blur-[100px]"></div>
+          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-5"></div>
+        </div>
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-14">
+            <div className="flex-1 text-center lg:text-left">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-brand-secondary text-xs font-bold mb-5">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-secondary opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-secondary"></span>
+                </span>
+                Innovation Meets Reality
+              </div>
+              <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-5 font-display leading-[1.1] tracking-tight">
+                Smart Solutions <br/>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-secondary to-blue-400">
+                  Direct from the Future.
+                </span>
+              </h1>
+              <p className="text-base text-gray-400 mb-7 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                Why settle for ordinary? Go electric, go digital, and grab genius-level innovations — crafted to transform your life and drive sustainability.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
+                <Link
+                  to="/products"
+                  className="group bg-brand-secondary text-brand-dark px-8 py-3 rounded-xl font-bold text-base hover:bg-white transition-all duration-300 shadow-lg shadow-brand-secondary/10 flex items-center justify-center gap-2"
+                >
+                  Explore Products
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
+                <Link
+                  to="/about"
+                  className="px-8 py-3 rounded-xl font-bold text-base text-white border-2 border-white/10 hover:bg-white/5 transition-all flex items-center justify-center"
+                >
+                  Our Vision
+                </Link>
+              </div>
+
+              {/* Trust Indicators */}
+              <div className="mt-8 flex flex-wrap justify-center lg:justify-start items-center gap-6 opacity-50 hover:opacity-80 transition-opacity duration-500">
+                <div className="flex items-center gap-1.5">
+                  <Award className="w-4 h-4 text-white" />
+                  <span className="text-white text-xs font-bold tracking-widest uppercase">Certified Safety</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <ShieldCheck className="w-4 h-4 text-white" />
+                  <span className="text-white text-xs font-bold tracking-widest uppercase">2yr Warranty</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <Users className="w-4 h-4 text-white" />
+                  <span className="text-white text-xs font-bold tracking-widest uppercase">500+ Users</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Hero Product Slideshow */}
+            <div className="flex-1 relative">
+              <div className="relative bg-gradient-to-br from-brand-primary to-blue-900 rounded-[2rem] p-1.5 shadow-2xl overflow-hidden">
+                {/* Crossfade image */}
+                <img
+                  key={heroIndex}
+                  src={products[heroIndex].image}
+                  alt={products[heroIndex].name}
+                  className="rounded-[1.7rem] w-full aspect-[4/5] object-cover"
+                  style={{
+                    opacity: heroVisible ? 1 : 0,
+                    transition: 'opacity 0.4s ease-in-out',
+                  }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/80 via-transparent to-transparent rounded-[2rem]"></div>
+                {/* Product info overlay */}
+                <div
+                  className="absolute bottom-5 left-5 right-5 p-4 bg-white/10 backdrop-blur-xl rounded-xl border border-white/10"
+                  style={{
+                    opacity: heroVisible ? 1 : 0,
+                    transition: 'opacity 0.4s ease-in-out',
+                  }}
+                >
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <p className="text-brand-secondary text-xs font-bold uppercase tracking-widest mb-0.5">Featured Item</p>
+                      <h3 className="text-base font-bold text-white">{products[heroIndex].name}</h3>
+                      <p className="text-white/60 text-xs mt-0.5">₹{products[heroIndex].price.toLocaleString()}</p>
+                    </div>
+                    <Link to={`/product/${products[heroIndex].id}`} className="bg-white p-2 rounded-lg text-brand-dark hover:bg-brand-secondary transition-colors">
+                      <ArrowRight className="w-4 h-4" />
+                    </Link>
+                  </div>
+                  {/* Dot indicators */}
+                  <div className="flex gap-1 mt-3 justify-center">
+                    {products.map((_, i) => (
+                      <button
+                        key={i}
+                        onClick={() => { setHeroVisible(false); setTimeout(() => { setHeroIndex(i); setHeroVisible(true); }, 300); }}
+                        className={`h-1.5 rounded-full transition-all duration-300 ${
+                          i === heroIndex ? 'w-5 bg-brand-secondary' : 'w-1.5 bg-white/30'
+                        }`}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
+              {/* Floating Decorative Elements */}
+              <div className="absolute -top-4 -right-4 w-16 h-16 bg-brand-secondary/20 rounded-full blur-xl animate-pulse"></div>
+              <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-brand-primary/30 rounded-full blur-2xl"></div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Featured Products */}
-      <section className="py-8 bg-gray-50">
+      <section className="py-14 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Featured Products
-            </h2>
-            <h2 className="text-xl text-gray-600">
-              "Our best products - Designed by the minds of tomorrow."
-            </h2>
+          <div className="flex flex-col md:flex-row justify-between items-end gap-4 mb-10">
+            <div className="max-w-xl">
+              <h2 className="text-xs font-bold text-brand-secondary uppercase tracking-[0.2em] mb-2">Our Showcase</h2>
+              <h3 className="text-3xl md:text-4xl font-extrabold text-brand-primary font-display mb-3">Featured Innovations</h3>
+              <p className="text-gray-500 text-sm">
+                Hand-picked kits and smart solutions designed by the minds of tomorrow.
+              </p>
+            </div>
+            <Link 
+              to="/products"
+              className="px-5 py-2.5 rounded-xl border border-gray-200 text-brand-primary font-bold text-sm hover:bg-brand-light transition-all"
+            >
+              View All →
+            </Link>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 transition-opacity duration-500 ease-in-out" key={currentIndex}>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" key={currentIndex}>
             {featuredProducts.map((product) => (
-              <div key={product.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="w-full h-48 object-cover"
-                />
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">{product.name}</h3>
-                  <p className="text-gray-600 mb-4 line-clamp-2">{product.description}</p>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center space-x-2">
-                      <span className="text-2xl font-bold text-gray-900">₹{product.price.toLocaleString()}</span>
-                      {product.originalPrice && (
-                        <span className="text-lg text-gray-500 line-through">₹{product.originalPrice.toLocaleString()}</span>
-                      )}
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <span className="text-yellow-400">★</span>
-                      <span className="text-sm text-gray-600">{product.rating} ({product.reviews})</span>
-                    </div>
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+          
+          <div className="mt-10 bg-brand-light rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6 border border-blue-50">
+             <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-brand-primary flex items-center justify-center shadow-md shadow-indigo-100">
+                   <Zap className="w-6 h-6 text-brand-secondary fill-brand-secondary" />
+                </div>
+                <div>
+                   <h4 className="text-base font-bold text-brand-primary font-display">Looking for something custom?</h4>
+                   <p className="text-gray-500 text-sm">We specialize in custom web and hardware solutions.</p>
+                </div>
+             </div>
+             <Link
+               to="/contact"
+               className="bg-brand-primary text-white px-6 py-3 rounded-xl font-bold text-sm hover:bg-brand-dark transition-all shadow-md shadow-indigo-100"
+             >
+               Get Quote →
+             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Why Choose Carbo Vision - Redesigned */}
+      <section className="py-14 bg-brand-light/50 border-y border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <h2 className="text-xs font-bold text-brand-secondary uppercase tracking-[0.2em] mb-2">The Carbo Difference</h2>
+            <h3 className="text-3xl md:text-4xl font-extrabold text-brand-primary font-display">Why Trust Us?</h3>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+            {[
+              { 
+                icon: <Zap className="w-5 h-5" />, 
+                title: "High Performance", 
+                desc: "Powerful motors and high-density batteries for superior range.",
+                color: "bg-blue-500"
+              },
+              { 
+                icon: <Leaf className="w-5 h-5" />, 
+                title: "Eco-Friendly", 
+                desc: "Sustainable engineering to minimize your environment impact.",
+                color: "bg-emerald-500"
+              },
+              { 
+                icon: <Award className="w-5 h-5" />, 
+                title: "Quality Assured", 
+                desc: "Rigorous testing protocols for every custom-built component.",
+                color: "bg-amber-500"
+              },
+              { 
+                icon: <Users className="w-5 h-5" />, 
+                title: "Expert Support", 
+                desc: "24/7 technical assistance from our dedicated engineering team.",
+                color: "bg-indigo-500"
+              }
+            ].map((feature, i) => (
+              <div key={i} className="group bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                <div className={`${feature.color} w-10 h-10 rounded-xl flex items-center justify-center text-white mb-4`}>
+                  {feature.icon}
+                </div>
+                <h4 className="text-base font-bold text-brand-primary mb-2 font-display">{feature.title}</h4>
+                <p className="text-gray-500 text-sm leading-relaxed">{feature.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-14 bg-white overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <h2 className="text-xs font-bold text-brand-secondary uppercase tracking-[0.2em] mb-2">Voice of Experience</h2>
+            <h3 className="text-3xl md:text-4xl font-extrabold text-brand-primary font-display">Trusted by Innovators</h3>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {[
+              {
+                name: "Rahul Verma",
+                role: "Commuter",
+                quote: "The bike conversion kit completely changed my commute. It's powerful, quiet, and feels factory-built. Best investment of 2024!",
+                stars: 5
+              },
+              {
+                name: "Ananya Singh",
+                role: "Tech Enthusiast",
+                quote: "Their home automation solutions are seamless. I've tried many brands, but Carbo Vision's integration and support are unmatched.",
+                stars: 5
+              },
+              {
+                name: "Karan Johar",
+                role: "Business Owner",
+                quote: "Professional, creative, and fast. They didn't just build a website; they built a digital experience for my customers.",
+                stars: 5
+              }
+            ].map((t, i) => (
+              <div key={i} className="bg-brand-light p-7 rounded-2xl relative border border-blue-50">
+                <div className="flex gap-1 mb-4 text-brand-accent">
+                  {[...Array(t.stars)].map((_, s) => <Star key={s} className="w-4 h-4 fill-current" />)}
+                </div>
+                <p className="text-brand-primary text-sm font-medium italic mb-6">
+                  "{t.quote}"
+                </p>
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-full bg-brand-primary/10 flex items-center justify-center font-bold text-brand-primary text-sm">
+                    {t.name[0]}
                   </div>
-                  <Link
-                    to={`/product/${product.id}`}
-                    className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors inline-flex items-center justify-center"
-                  >
-                    View Details
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
+                  <div>
+                    <p className="font-bold text-brand-primary text-sm">{t.name}</p>
+                    <p className="text-xs text-gray-500 font-medium">{t.role}</p>
+                  </div>
                 </div>
               </div>
             ))}
           </div>
-          
-          <div className="text-center mt-12">
-            <Link
-              to="/products"
-              className="bg-gray-900 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-800 transition-colors inline-flex items-center"
-            >
-              View All Products
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
-          </div>
         </div>
       </section>
 
+      {/* Impact Stats — removed per user request */}
 
-      {/* Features Section */}
-      <section className="py-6 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Why Choose Carbo Vision?
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Because We Don't Just Build - We Transform . We turn wild ideas into real-world solutions - from electrifying your ride to crafting custom websites .
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="text-center p-6 rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 hover:shadow-lg transition-shadow">
-              <div className="bg-blue-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Zap className="h-8 w-8 text-white" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">High Performance</h3>
-              <p className="text-gray-600">Powerful motors and long-lasting batteries for superior performance</p>
+      {/* Final Call to Action */}
+      <section className="py-14 bg-white">
+         <div className="max-w-4xl mx-auto px-4 text-center">
+            <div className="bg-gradient-to-r from-brand-primary to-blue-900 rounded-2xl p-8 md:p-14 shadow-2xl relative overflow-hidden">
+               <div className="absolute top-0 right-0 w-48 h-48 bg-brand-secondary/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl"></div>
+               <h2 className="text-2xl md:text-4xl font-extrabold text-white font-display mb-5 leading-tight">
+                  Ready to Rebuild Your Everyday Life?
+               </h2>
+               <p className="text-blue-100/70 text-sm mb-7 max-w-xl mx-auto">
+                  Join 500+ users who have already upgraded their world with Carbo Vision innovations.
+               </p>
+               <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                  <Link to="/products" className="bg-brand-secondary text-brand-dark px-8 py-3 rounded-xl font-bold text-sm hover:shadow-lg hover:shadow-brand-secondary/20 transition-all">
+                    Start Shopping
+                  </Link>
+                  <button onClick={() => setShowModal(true)} className="px-8 py-3 rounded-xl font-bold text-sm bg-white/10 text-white border border-white/20 hover:bg-white/20 transition-all">
+                    Share Feedback
+                  </button>
+               </div>
             </div>
-            
-            <div className="text-center p-6 rounded-xl bg-gradient-to-br from-green-50 to-green-100 hover:shadow-lg transition-shadow">
-              <div className="bg-green-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Leaf className="h-8 w-8 text-white" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Eco-Friendly</h3>
-              <p className="text-gray-600">Reduce carbon footprint with sustainable electric transportation</p>
-            </div>
-            
-            <div className="text-center p-6 rounded-xl bg-gradient-to-br from-orange-50 to-orange-100 hover:shadow-lg transition-shadow">
-              <div className="bg-orange-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Award className="h-8 w-8 text-white" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Quality Assured</h3>
-              <p className="text-gray-600">Premium components with comprehensive warranty coverage</p>
-            </div>
-            
-            <div className="text-center p-6 rounded-xl bg-gradient-to-br from-purple-50 to-purple-100 hover:shadow-lg transition-shadow">
-              <div className="bg-purple-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Users className="h-8 w-8 text-white" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Expert Support</h3>
-              <p className="text-gray-600">Professional installation and ongoing technical support</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section className="py-16 bg-gradient-to-r from-gray-900 to-blue-900 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 text-center">
-            <div>
-              <div className="text-4xl md:text-5xl font-bold mb-2">500+</div>
-              <div className="text-lg text-gray-300">Successful Conversions</div>
-            </div>
-            <div>
-              <div className="text-4xl md:text-5xl font-bold mb-2">95%</div>
-              <div className="text-lg text-gray-300">Customer Satisfaction</div>
-            </div>
-            <div>
-              <div className="text-4xl md:text-5xl font-bold mb-2">2Yr</div>
-              <div className="text-lg text-gray-300">Warranty Coverage</div>
-            </div>
-            <div>
-              <div className="text-4xl md:text-5xl font-bold mb-2">24/7</div>
-              <div className="text-lg text-gray-300">Technical Support</div>
-            </div>
-            {/* 5th card — Live Visitor Count */}
-            <div className="flex flex-col items-center">
-              <div className="flex items-center justify-center gap-2 text-4xl md:text-5xl font-bold mb-2">
-                <Eye className="h-9 w-9 text-blue-300" />
-                <span>
-                  {visitorCount !== null
-                    ? visitorCount.toLocaleString()
-                    : <span className="animate-pulse text-gray-400">—</span>
-                  }
-                </span>
-              </div>
-              <div className="text-lg text-gray-300">Site Visitors</div>
-            </div>
-          </div>
-        </div>
+         </div>
       </section>
     </div>
   );
