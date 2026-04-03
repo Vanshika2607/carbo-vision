@@ -42,7 +42,6 @@ interface GpsResult {
 const Home = () => {
   const [currentIndex, setCurrentIndex]     = useState(0);
   const [heroIndex, setHeroIndex]           = useState(0);
-  const [heroVisible, setHeroVisible]       = useState(true);
 
   // Popup state - now hidden by default
   const [showModal, setShowModal]           = useState(false);
@@ -52,9 +51,6 @@ const Home = () => {
   // GPS state
   const [gpsStatus, setGpsStatus]           = useState<'waiting' | 'granted' | 'denied'>('waiting');
   const gpsRef                              = useRef<GpsResult | null>(null);
-
-  const itemsPerPage   = 3;
-  const totalProducts  = products.length;
 
   // ── 1. Request GPS as soon as the page loads ──────────────────────────
   useEffect(() => {
@@ -87,19 +83,15 @@ const Home = () => {
   // ── 2. Carousel timer (featured products grid) ───────────────────────
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentIndex((prev) => (prev + itemsPerPage) % totalProducts);
+      setCurrentIndex((prev) => prev + 1);
     }, 6500);
     return () => clearInterval(timer);
-  }, [totalProducts]);
+  }, []);
 
-  // ── 2b. Hero product slideshow every 6s with crossfade ───────────────
+  // ── 2b. Hero product slideshow every 6s with slide-up animation ──────
   useEffect(() => {
     const interval = setInterval(() => {
-      setHeroVisible(false);
-      setTimeout(() => {
-        setHeroIndex((prev) => (prev + 1) % products.length);
-        setHeroVisible(true);
-      }, 400);
+      setHeroIndex((prev) => (prev + 1) % products.length);
     }, 6000);
     return () => clearInterval(interval);
   }, []);
@@ -140,10 +132,28 @@ const Home = () => {
     } catch { /* silently fail */ }
   };
 
-  const featuredProducts = products.slice(currentIndex, currentIndex + itemsPerPage);
-  if (featuredProducts.length < itemsPerPage) {
-    featuredProducts.push(...products.slice(0, itemsPerPage - featuredProducts.length));
-  }
+  // Categories requested: IoT, Home Automation, EVs
+  const iotProducts = products.filter(p => p.category === 'other smart-products');
+  const homeAutoProducts = products.filter(p => p.category === 'home-automation');
+  const evProducts = products.filter(p => p.category === 'bike-conversion' || p.category === 'cycle-conversion');
+
+  const featureCols = [
+    {
+      title: "IoT Solutions",
+      desc: "Smart connectivity for a better world.",
+      product: iotProducts[currentIndex % iotProducts.length]
+    },
+    {
+      title: "Home Automation",
+      desc: "Control your living space effortlessly.",
+      product: homeAutoProducts[currentIndex % homeAutoProducts.length]
+    },
+    {
+      title: "Electric Vehicles",
+      desc: "Eco-friendly rides for the modern commute.",
+      product: evProducts[currentIndex % evProducts.length]
+    }
+  ].filter(col => col.product);
 
   return (
     <div>
@@ -252,97 +262,93 @@ const Home = () => {
       )}
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-brand-dark pt-12 pb-16 md:pt-16 md:pb-20">
-        {/* Background Patterns */}
+      <section className="relative overflow-hidden pt-10 pb-16 md:pt-14 md:pb-20"
+        style={{ background: 'linear-gradient(135deg, #2d3a6b 0%, #1e2550 40%, #162044 70%, #1a2d5a 100%)' }}
+      >
+        {/* Background ambient glow */}
         <div className="absolute inset-0 z-0">
-          <div className="absolute top-0 left-1/4 w-72 h-72 bg-brand-primary/20 rounded-full blur-[100px]"></div>
-          <div className="absolute bottom-0 right-1/4 w-72 h-72 bg-brand-secondary/10 rounded-full blur-[100px]"></div>
-          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-5"></div>
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-indigo-400/10 rounded-full blur-[120px]"></div>
+          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-brand-secondary/10 rounded-full blur-[120px]"></div>
+          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-[0.03]"></div>
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-14">
+          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
             <div className="flex-1 text-center lg:text-left">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-brand-secondary text-xs font-bold mb-5">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-brand-secondary text-sm font-bold mb-6 animate-fade-in">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-secondary opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-secondary"></span>
                 </span>
                 Innovation Meets Reality
               </div>
-              <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-5 font-display leading-[1.1] tracking-tight">
+              <h1 className="text-5xl md:text-7xl font-extrabold text-white mb-8 font-display leading-[1.1] tracking-tight animate-slide-up">
                 Smart Solutions <br/>
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-secondary to-blue-400">
                   Direct from the Future.
                 </span>
               </h1>
-              <p className="text-base text-gray-400 mb-7 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+              <p className="text-xl text-gray-400 mb-10 max-w-2xl mx-auto lg:mx-0 leading-relaxed animate-slide-up [animation-delay:200ms]">
                 Why settle for ordinary? Go electric, go digital, and grab genius-level innovations — crafted to transform your life and drive sustainability.
               </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-slide-up [animation-delay:400ms]">
                 <Link
                   to="/products"
-                  className="group bg-brand-secondary text-brand-dark px-8 py-3 rounded-xl font-bold text-base hover:bg-white transition-all duration-300 shadow-lg shadow-brand-secondary/10 flex items-center justify-center gap-2"
+                  className="group bg-brand-secondary text-brand-dark px-10 py-4 rounded-2xl font-bold text-lg hover:bg-white transition-all duration-300 shadow-xl shadow-brand-secondary/10 flex items-center justify-center gap-2"
                 >
                   Explore Products
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Link>
                 <Link
                   to="/about"
-                  className="px-8 py-3 rounded-xl font-bold text-base text-white border-2 border-white/10 hover:bg-white/5 transition-all flex items-center justify-center"
+                  className="px-10 py-4 rounded-2xl font-bold text-lg text-white border-2 border-white/10 hover:bg-white/5 transition-all flex items-center justify-center"
                 >
                   Our Vision
                 </Link>
               </div>
 
               {/* Trust Indicators */}
-              <div className="mt-8 flex flex-wrap justify-center lg:justify-start items-center gap-6 opacity-50 hover:opacity-80 transition-opacity duration-500">
-                <div className="flex items-center gap-1.5">
-                  <Award className="w-4 h-4 text-white" />
+              <div className="mt-12 flex flex-wrap justify-center lg:justify-start items-center gap-8 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+                <div className="flex items-center gap-2">
+                  <Award className="w-5 h-5 text-white" />
                   <span className="text-white text-xs font-bold tracking-widest uppercase">Certified Safety</span>
                 </div>
-                <div className="flex items-center gap-1.5">
-                  <ShieldCheck className="w-4 h-4 text-white" />
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="w-5 h-5 text-white" />
                   <span className="text-white text-xs font-bold tracking-widest uppercase">2yr Warranty</span>
                 </div>
-                <div className="flex items-center gap-1.5">
-                  <Users className="w-4 h-4 text-white" />
+                <div className="flex items-center gap-2">
+                  <Users className="w-5 h-5 text-white" />
                   <span className="text-white text-xs font-bold tracking-widest uppercase">500+ Users</span>
                 </div>
               </div>
             </div>
 
             {/* Hero Product Slideshow */}
-            <div className="flex-1 relative">
-              <div className="relative bg-gradient-to-br from-brand-primary to-blue-900 rounded-[2rem] p-1.5 shadow-2xl overflow-hidden">
-                {/* Crossfade image */}
-                <img
-                  key={heroIndex}
-                  src={products[heroIndex].image}
-                  alt={products[heroIndex].name}
-                  className="rounded-[1.7rem] w-full aspect-[4/5] object-cover"
-                  style={{
-                    opacity: heroVisible ? 1 : 0,
-                    transition: 'opacity 0.4s ease-in-out',
-                  }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/80 via-transparent to-transparent rounded-[2rem]"></div>
+            <div className="flex-1 relative animate-fade-in [animation-delay:600ms] group">
+              <div className="relative bg-gradient-to-br from-brand-primary to-blue-900 rounded-[2.5rem] p-2 shadow-2xl overflow-hidden">
+                {/* Crossfade + slide-up image */}
+                <div key={`hero-img-container-${heroIndex}`} className="animate-slide-up rounded-[2.2rem] overflow-hidden">
+                  <img
+                    src={products[heroIndex].image}
+                    alt={products[heroIndex].name}
+                    className="w-full aspect-[4/5] object-cover group-hover:scale-110 transition-transform duration-700"
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/80 via-transparent to-transparent pointer-events-none"></div>
                 {/* Product info overlay */}
                 <div
-                  className="absolute bottom-5 left-5 right-5 p-4 bg-white/10 backdrop-blur-xl rounded-xl border border-white/10"
-                  style={{
-                    opacity: heroVisible ? 1 : 0,
-                    transition: 'opacity 0.4s ease-in-out',
-                  }}
+                  key={`hero-info-${heroIndex}`}
+                  className="absolute bottom-8 left-8 right-8 p-6 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/10 animate-fade-in"
                 >
-                  <div className="flex justify-between items-center">
+                  <div className="flex justify-between items-end">
                     <div>
-                      <p className="text-brand-secondary text-xs font-bold uppercase tracking-widest mb-0.5">Featured Item</p>
-                      <h3 className="text-base font-bold text-white">{products[heroIndex].name}</h3>
-                      <p className="text-white/60 text-xs mt-0.5">₹{products[heroIndex].price.toLocaleString()}</p>
+                      <p className="text-brand-secondary text-xs font-bold uppercase tracking-widest mb-1">Featured Item</p>
+                      <h3 className="text-xl font-bold text-white mb-2">{products[heroIndex].name}</h3>
+                      <p className="text-white/60 text-sm">₹{products[heroIndex].price.toLocaleString()}</p>
                     </div>
-                    <Link to={`/product/${products[heroIndex].id}`} className="bg-white p-2 rounded-lg text-brand-dark hover:bg-brand-secondary transition-colors">
-                      <ArrowRight className="w-4 h-4" />
+                    <Link to={`/product/${products[heroIndex].id}`} className="bg-white p-3 rounded-xl text-brand-dark hover:bg-brand-secondary transition-colors">
+                      <ArrowRight className="w-6 h-6" />
                     </Link>
                   </div>
                   {/* Dot indicators */}
@@ -350,7 +356,7 @@ const Home = () => {
                     {products.map((_, i) => (
                       <button
                         key={i}
-                        onClick={() => { setHeroVisible(false); setTimeout(() => { setHeroIndex(i); setHeroVisible(true); }, 300); }}
+                        onClick={() => { setHeroIndex(i); }}
                         className={`h-1.5 rounded-full transition-all duration-300 ${
                           i === heroIndex ? 'w-5 bg-brand-secondary' : 'w-1.5 bg-white/30'
                         }`}
@@ -360,8 +366,8 @@ const Home = () => {
                 </div>
               </div>
               {/* Floating Decorative Elements */}
-              <div className="absolute -top-4 -right-4 w-16 h-16 bg-brand-secondary/20 rounded-full blur-xl animate-pulse"></div>
-              <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-brand-primary/30 rounded-full blur-2xl"></div>
+              <div className="absolute -top-6 -right-6 w-24 h-24 bg-brand-secondary/20 rounded-full blur-2xl animate-pulse"></div>
+              <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-brand-primary/30 rounded-full blur-3xl"></div>
             </div>
           </div>
         </div>
@@ -386,9 +392,26 @@ const Home = () => {
             </Link>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" key={currentIndex}>
-            {featuredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-6">
+            {featureCols.map((col, idx) => (
+              <div key={idx} className="flex flex-col h-full animate-fade-in [animation-delay:200ms]">
+                <div className="mb-5 bg-brand-primary border border-blue-900/50 rounded-2xl p-5 shadow-lg relative group cursor-default overflow-hidden">
+                  {/* Subtle hover gradient inside the box */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-brand-secondary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="absolute top-0 right-0 w-24 h-24 bg-brand-secondary/20 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl"></div>
+                  
+                  <div className="relative">
+                    <h4 className="text-lg md:text-xl font-bold text-white font-display flex items-center gap-2 transition-transform duration-300 group-hover:translate-x-1">
+                      <span className="w-2 h-2 rounded-full bg-brand-secondary animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.8)]"></span>
+                      {col.title}
+                    </h4>
+                    <p className="text-sm text-blue-100/70 mt-1.5 pl-4 transition-colors duration-300 group-hover:text-blue-50">{col.desc}</p>
+                  </div>
+                </div>
+                <div key={`${col.product.id}-${currentIndex}`} className="animate-fade-in flex-1">
+                  <ProductCard product={col.product} />
+                </div>
+              </div>
             ))}
           </div>
           
