@@ -92,7 +92,7 @@ const Header = () => {
                 to="/login"
                 className="hidden md:inline-flex items-center px-6 py-2.5 rounded-xl text-sm font-bold text-white bg-brand-primary hover:bg-brand-dark transition-all duration-300 shadow-lg shadow-indigo-200 hover:shadow-indigo-300 hover:-translate-y-0.5 active:translate-y-0"
               >
-                Sign In
+                Sign In / Sign Up
               </Link>
             )}
 
@@ -155,7 +155,7 @@ const Header = () => {
                   onClick={() => setIsMenuOpen(false)}
                   className="block w-full text-center py-4 rounded-2xl text-base font-bold text-white bg-brand-primary hover:bg-brand-dark transition-all duration-300 shadow-lg shadow-indigo-100"
                 >
-                  Sign In
+                  Sign In / Sign Up
                 </Link>
               )}
             </div>
