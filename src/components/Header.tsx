@@ -23,14 +23,14 @@ const Header = () => {
   return (
     <header className="bg-white/80 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
+        <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3 group">
             <div className="bg-brand-primary p-2.5 rounded-2xl group-hover:rotate-12 transition-transform duration-300 shadow-lg shadow-indigo-200">
               <Zap className="h-6 w-6 text-brand-secondary fill-brand-secondary" />
             </div>
             <div>
-              <h1 className="text-xl font-extrabold text-brand-primary font-display tracking-tight leading-none">Carbo Vision</h1>
+              <h1 className="text-lg font-extrabold text-brand-primary font-display tracking-tight leading-none">Carbo Vision</h1>
               <p className="text-[10px] uppercase font-bold text-gray-400 tracking-widest mt-1">Private Limited</p>
             </div>
           </Link>

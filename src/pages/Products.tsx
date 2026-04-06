@@ -40,12 +40,12 @@ const Products = () => {
       {/* Header */}
       <div className="bg-white border-b border-gray-100 overflow-hidden relative">
         <div className="absolute top-0 right-0 w-64 h-64 bg-brand-secondary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
           <div className="flex items-center gap-2 text-brand-secondary text-sm font-bold uppercase tracking-widest mb-4">
             <div className="h-1 w-8 bg-brand-secondary rounded-full"></div>
             Marketplace
           </div>
-          <h1 className="text-4xl md:text-5xl font-extrabold text-brand-primary font-display mb-4">
+          <h1 className="text-3xl md:text-4xl font-extrabold text-brand-primary font-display mb-3">
             Custom Solutions
           </h1>
           <p className="text-lg text-gray-500 max-w-2xl leading-relaxed">
@@ -55,12 +55,12 @@ const Products = () => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex flex-col lg:flex-row gap-12">
           {/* Filters Sidebar */}
           <div className="lg:w-72 space-y-8">
-            <div className="bg-white p-8 rounded-[2rem] shadow-sm border border-gray-100">
-              <h3 className="text-lg font-bold text-brand-primary mb-6 flex items-center gap-2 font-display">
+            <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+              <h3 className="text-base font-bold text-brand-primary mb-5 flex items-center gap-2 font-display">
                 <Filter className="h-5 w-5 text-brand-secondary" />
                 Categories
               </h3>
@@ -87,9 +87,9 @@ const Products = () => {
             </div>
 
             {/* Quick Promo */}
-            <div className="bg-brand-dark rounded-[2rem] p-8 text-white relative overflow-hidden group">
+            <div className="bg-brand-dark rounded-2xl p-6 text-white relative overflow-hidden group">
               <div className="absolute top-0 right-0 w-32 h-32 bg-brand-secondary/20 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:scale-150 transition-transform duration-700"></div>
-              <h4 className="text-xl font-bold mb-3 font-display relative z-10 text-brand-secondary">Need Guidance?</h4>
+              <h4 className="text-lg font-bold mb-2 font-display relative z-10 text-brand-secondary">Need Guidance?</h4>
               <p className="text-gray-400 text-xs mb-6 leading-relaxed relative z-10">Our engineers are ready to help you pick the perfect kit for your needs.</p>
               <Link to="/contact" className="inline-flex items-center gap-2 text-brand-secondary font-bold text-sm hover:translate-x-1 transition-transform">
                 Consult an Expert <ArrowRight className="w-4 h-4" />
@@ -150,7 +150,7 @@ const Products = () => {
             </div>
 
             {sortedProducts.length === 0 && (
-              <div className="text-center py-32 bg-white rounded-[2.5rem] border border-dashed border-gray-200">
+              <div className="text-center py-20 bg-white rounded-2xl border border-dashed border-gray-200">
                 <div className="bg-gray-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
                    <Search className="h-8 w-8 text-gray-300" />
                 </div>

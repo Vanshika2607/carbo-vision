@@ -13,7 +13,7 @@ const ProductCard = ({ product, isListView = false }: ProductCardProps) => {
     : 0;
 
   return (
-    <div className={`group bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 ${isListView ? 'flex flex-col sm:flex-row' : 'flex flex-col h-full'}`}>
+    <div className={`group bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 ${isListView ? 'flex flex-col sm:flex-row' : 'flex flex-col h-full'}`}>
       {/* Image Container */}
       <div className={`relative overflow-hidden ${isListView ? 'sm:w-64 h-64' : 'aspect-[4/3]'}`}>
         <img
@@ -42,7 +42,7 @@ const ProductCard = ({ product, isListView = false }: ProductCardProps) => {
       </div>
 
       {/* Content Container */}
-      <div className={`p-6 flex flex-col flex-1 ${isListView ? 'justify-between' : ''}`}>
+      <div className={`p-4 md:p-5 flex flex-col flex-1 ${isListView ? 'justify-between' : ''}`}>
         <div>
           <div className="flex items-center gap-1 mb-2">
             <div className="flex items-center text-brand-accent">
@@ -52,7 +52,7 @@ const ProductCard = ({ product, isListView = false }: ProductCardProps) => {
             <span className="text-gray-400 text-xs">({product.reviews} reviews)</span>
           </div>
           
-          <h3 className="text-xl font-bold text-gray-900 group-hover:text-brand-primary transition-colors mb-2 font-display">
+          <h3 className="text-lg font-bold text-gray-900 group-hover:text-brand-primary transition-colors mb-2 font-display">
             {product.name}
           </h3>
           <p className="text-gray-600 text-sm line-clamp-2 mb-4 leading-relaxed">
@@ -61,8 +61,8 @@ const ProductCard = ({ product, isListView = false }: ProductCardProps) => {
         </div>
 
         <div>
-          <div className="flex items-end gap-3 mb-6">
-            <span className="text-2xl font-extrabold text-brand-primary font-display">
+          <div className="flex items-end gap-2 mb-4">
+            <span className="text-xl font-extrabold text-brand-primary font-display">
               ₹{product.price.toLocaleString()}
             </span>
             {product.originalPrice && (

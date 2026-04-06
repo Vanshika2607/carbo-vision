@@ -262,7 +262,7 @@ const Home = () => {
       )}
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden pt-10 pb-16 md:pt-14 md:pb-20"
+      <section className="relative overflow-hidden pt-6 pb-10 md:pt-10 md:pb-12"
         style={{ background: 'linear-gradient(135deg, #2d3a6b 0%, #1e2550 40%, #162044 70%, #1a2d5a 100%)' }}
       >
         {/* Background ambient glow */}
@@ -282,26 +282,26 @@ const Home = () => {
                 </span>
                 Innovation Meets Reality
               </div>
-              <h1 className="text-5xl md:text-7xl font-extrabold text-white mb-8 font-display leading-[1.1] tracking-tight animate-slide-up">
+              <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-6 font-display leading-[1.1] tracking-tight animate-slide-up">
                 Smart Solutions <br/>
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-secondary to-blue-400">
                   Direct from the Future.
                 </span>
               </h1>
-              <p className="text-xl text-gray-400 mb-10 max-w-2xl mx-auto lg:mx-0 leading-relaxed animate-slide-up [animation-delay:200ms]">
+              <p className="text-lg text-gray-400 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed animate-slide-up [animation-delay:200ms]">
                 Why settle for ordinary? Go electric, go digital, and grab genius-level innovations — crafted to transform your life and drive sustainability.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-slide-up [animation-delay:400ms]">
                 <Link
                   to="/products"
-                  className="group bg-brand-secondary text-brand-dark px-10 py-4 rounded-2xl font-bold text-lg hover:bg-white transition-all duration-300 shadow-xl shadow-brand-secondary/10 flex items-center justify-center gap-2"
+                  className="group bg-brand-secondary text-brand-dark px-8 py-3 rounded-xl font-bold text-base hover:bg-white transition-all duration-300 shadow-xl shadow-brand-secondary/10 flex items-center justify-center gap-2"
                 >
                   Explore Products
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Link>
                 <Link
                   to="/about"
-                  className="px-10 py-4 rounded-2xl font-bold text-lg text-white border-2 border-white/10 hover:bg-white/5 transition-all flex items-center justify-center"
+                  className="px-8 py-3 rounded-xl font-bold text-base text-white border-2 border-white/10 hover:bg-white/5 transition-all flex items-center justify-center"
                 >
                   Our Vision
                 </Link>
@@ -339,7 +339,7 @@ const Home = () => {
                 {/* Product info overlay */}
                 <div
                   key={`hero-info-${heroIndex}`}
-                  className="absolute bottom-8 left-8 right-8 p-6 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/10 animate-fade-in"
+                  className="absolute bottom-6 left-6 right-6 p-6 bg-white/10 backdrop-blur-xl rounded-3xl border border-white/10 animate-fade-in shadow-lg"
                 >
                   <div className="flex justify-between items-end">
                     <div>
@@ -374,12 +374,12 @@ const Home = () => {
       </section>
 
       {/* Featured Products */}
-      <section className="py-14 bg-white">
+      <section className="py-10 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-end gap-4 mb-10">
             <div className="max-w-xl">
               <h2 className="text-xs font-bold text-brand-secondary uppercase tracking-[0.2em] mb-2">Our Showcase</h2>
-              <h3 className="text-3xl md:text-4xl font-extrabold text-brand-primary font-display mb-3">Featured Innovations</h3>
+              <h3 className="text-2xl md:text-3xl font-extrabold text-brand-primary font-display mb-2">Featured Innovations</h3>
               <p className="text-gray-500 text-sm">
                 Hand-picked kits and smart solutions designed by the minds of tomorrow.
               </p>
@@ -401,7 +401,7 @@ const Home = () => {
                   <div className="absolute top-0 right-0 w-24 h-24 bg-brand-secondary/20 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl"></div>
                   
                   <div className="relative">
-                    <h4 className="text-lg md:text-xl font-bold text-white font-display flex items-center gap-2 transition-transform duration-300 group-hover:translate-x-1">
+                    <h4 className="text-base md:text-lg font-bold text-white font-display flex items-center gap-2 transition-transform duration-300 group-hover:translate-x-1">
                       <span className="w-2 h-2 rounded-full bg-brand-secondary animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.8)]"></span>
                       {col.title}
                     </h4>
@@ -436,11 +436,11 @@ const Home = () => {
       </section>
 
       {/* Why Choose Carbo Vision - Redesigned */}
-      <section className="py-14 bg-brand-light/50 border-y border-gray-100">
+      <section className="py-10 bg-brand-light/50 border-y border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
             <h2 className="text-xs font-bold text-brand-secondary uppercase tracking-[0.2em] mb-2">The Carbo Difference</h2>
-            <h3 className="text-3xl md:text-4xl font-extrabold text-brand-primary font-display">Why Trust Us?</h3>
+            <h3 className="text-2xl md:text-3xl font-extrabold text-brand-primary font-display">Why Trust Us?</h3>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -470,7 +470,7 @@ const Home = () => {
                 color: "bg-indigo-500"
               }
             ].map((feature, i) => (
-              <div key={i} className="group bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+              <div key={i} className="group bg-white p-5 rounded-xl border border-gray-100 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
                 <div className={`${feature.color} w-10 h-10 rounded-xl flex items-center justify-center text-white mb-4`}>
                   {feature.icon}
                 </div>
@@ -483,11 +483,11 @@ const Home = () => {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-14 bg-white overflow-hidden">
+      <section className="py-10 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
             <h2 className="text-xs font-bold text-brand-secondary uppercase tracking-[0.2em] mb-2">Voice of Experience</h2>
-            <h3 className="text-3xl md:text-4xl font-extrabold text-brand-primary font-display">Trusted by Innovators</h3>
+            <h3 className="text-2xl md:text-3xl font-extrabold text-brand-primary font-display">Trusted by Innovators</h3>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -511,7 +511,7 @@ const Home = () => {
                 stars: 5
               }
             ].map((t, i) => (
-              <div key={i} className="bg-brand-light p-7 rounded-2xl relative border border-blue-50">
+              <div key={i} className="bg-brand-light p-6 rounded-xl relative border border-blue-50">
                 <div className="flex gap-1 mb-4 text-brand-accent">
                   {[...Array(t.stars)].map((_, s) => <Star key={s} className="w-4 h-4 fill-current" />)}
                 </div>
@@ -536,11 +536,11 @@ const Home = () => {
       {/* Impact Stats — removed per user request */}
 
       {/* Final Call to Action */}
-      <section className="py-14 bg-white">
+      <section className="py-10 bg-white">
          <div className="max-w-4xl mx-auto px-4 text-center">
-            <div className="bg-gradient-to-r from-brand-primary to-blue-900 rounded-2xl p-8 md:p-14 shadow-2xl relative overflow-hidden">
+            <div className="bg-gradient-to-r from-brand-primary to-blue-900 rounded-2xl p-6 md:p-10 shadow-2xl relative overflow-hidden">
                <div className="absolute top-0 right-0 w-48 h-48 bg-brand-secondary/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl"></div>
-               <h2 className="text-2xl md:text-4xl font-extrabold text-white font-display mb-5 leading-tight">
+               <h2 className="text-xl md:text-3xl font-extrabold text-white font-display mb-4 leading-tight">
                   Ready to Rebuild Your Everyday Life?
                </h2>
                <p className="text-blue-100/70 text-sm mb-7 max-w-xl mx-auto">

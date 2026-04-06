@@ -4,7 +4,7 @@ import { Mail, Phone, MapPin, Zap } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="bg-brand-dark text-white pt-20 pb-10">
+    <footer className="bg-brand-dark text-white pt-12 pb-6">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           {/* Brand Info */}
@@ -13,7 +13,7 @@ const Footer = () => {
               <div className="bg-white/10 p-2 rounded-xl backdrop-blur-sm group-hover:bg-brand-secondary/20 transition-colors">
                 <Zap className="h-6 w-6 text-brand-secondary fill-brand-secondary" />
               </div>
-              <h2 className="text-xl font-extrabold font-display tracking-tight">Carbo Vision</h2>
+              <h2 className="text-lg font-extrabold font-display tracking-tight">Carbo Vision</h2>
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
               Reimagining everyday life with smart, sustainable, and customized innovations — built for your needs, powered by creativity.
