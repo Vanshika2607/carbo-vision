@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Star, ShoppingCart, ArrowRight } from 'lucide-react';
 import { Product } from '../data/products';
+import { useState, useEffect } from 'react';
 
 interface ProductCardProps {
   product: Product;
@@ -8,6 +9,16 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product, isListView = false }: ProductCardProps) => {
+  const [showVideo, setShowVideo] = useState(true);
+
+  useEffect(() => {
+    if (!product.videoUrls?.[0]) return;
+    const interval = setInterval(() => {
+      setShowVideo((prev) => !prev);
+    }, 3500);
+    return () => clearInterval(interval);
+  }, [product.videoUrls]);
+
   const discountPercentage = product.originalPrice 
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100) 
     : 0;
@@ -15,12 +26,24 @@ const ProductCard = ({ product, isListView = false }: ProductCardProps) => {
   return (
     <div className={`group bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 ${isListView ? 'flex flex-col sm:flex-row' : 'flex flex-col h-full'}`}>
       {/* Image Container */}
-      <div className={`relative overflow-hidden ${isListView ? 'sm:w-64 h-64' : 'aspect-[4/3]'}`}>
+      <div className={`relative bg-black overflow-hidden ${isListView ? 'sm:w-64 h-64' : 'aspect-[4/3]'}`}>
         <img
           src={product.image}
           alt={product.name}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+          className={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 group-hover:scale-110 ${
+            product.videoUrls?.[0] && showVideo ? 'opacity-0 scale-105' : 'opacity-100'
+          }`}
         />
+        {product.videoUrls?.[0] && (
+          <iframe
+            src={`${product.videoUrls?.[0]}?autoplay=1&muted=1&loop=1&background=1`}
+            className={`absolute inset-0 w-full h-full object-cover pointer-events-none transition-all duration-1000 group-hover:scale-110 ${
+              showVideo ? 'opacity-100' : 'opacity-0 scale-95'
+            }`}
+            allow="autoplay; fullscreen; picture-in-picture"
+            title={`${product.name} Video`}
+          ></iframe>
+        )}
         {discountPercentage > 0 && (
           <div className="absolute top-4 left-4 bg-brand-secondary text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg">
             {discountPercentage}% OFF

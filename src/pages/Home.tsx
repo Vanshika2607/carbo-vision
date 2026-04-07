@@ -42,6 +42,7 @@ interface GpsResult {
 const Home = () => {
   const [currentIndex, setCurrentIndex]     = useState(0);
   const [heroIndex, setHeroIndex]           = useState(0);
+  const [showVideoFrame, setShowVideoFrame] = useState(true);
 
   // Popup state - now hidden by default
   const [showModal, setShowModal]           = useState(false);
@@ -94,6 +95,14 @@ const Home = () => {
       setHeroIndex((prev) => (prev + 1) % products.length);
     }, 6000);
     return () => clearInterval(interval);
+  }, []);
+
+  // ── 2c. Toggle video vs image frame every 3.5s ──────
+  useEffect(() => {
+    const videoInterval = setInterval(() => {
+      setShowVideoFrame((prev) => !prev);
+    }, 3500);
+    return () => clearInterval(videoInterval);
   }, []);
 
   // ── 3. Send visitor data after popup is submitted ─────────────────────
@@ -315,7 +324,7 @@ const Home = () => {
                 </div>
                 <div className="flex items-center gap-2">
                   <ShieldCheck className="w-5 h-5 text-white" />
-                  <span className="text-white text-xs font-bold tracking-widest uppercase">2yr Warranty</span>
+                  <span className="text-white text-xs font-bold tracking-widest uppercase">1yr Warranty</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Users className="w-5 h-5 text-white" />
@@ -327,13 +336,25 @@ const Home = () => {
             {/* Hero Product Slideshow */}
             <div className="flex-1 relative animate-fade-in [animation-delay:600ms] group">
               <div className="relative bg-gradient-to-br from-brand-primary to-blue-900 rounded-[2.5rem] p-2 shadow-2xl overflow-hidden">
-                {/* Crossfade + slide-up image */}
-                <div key={`hero-img-container-${heroIndex}`} className="animate-slide-up rounded-[2.2rem] overflow-hidden">
+                {/* Crossfade + slide-up image & video toggle */}
+                <div key={`hero-img-container-${heroIndex}`} className="animate-slide-up rounded-[2.2rem] overflow-hidden relative aspect-[4/5] bg-black">
                   <img
                     src={products[heroIndex].image}
                     alt={products[heroIndex].name}
-                    className="w-full aspect-[4/5] object-cover group-hover:scale-110 transition-transform duration-700"
+                    className={`absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-all duration-1000 ${
+                      products[heroIndex].videoUrls?.[0] && showVideoFrame ? 'opacity-0 scale-105' : 'opacity-100'
+                    }`}
                   />
+                  {products[heroIndex].videoUrls?.[0] && (
+                    <iframe
+                      src={`${products[heroIndex].videoUrls?.[0]}?autoplay=1&muted=1&loop=1&background=1`}
+                      className={`absolute inset-0 w-full h-full object-cover pointer-events-none group-hover:scale-110 transition-all duration-1000 ${
+                        showVideoFrame ? 'opacity-100' : 'opacity-0 scale-95'
+                      }`}
+                      allow="autoplay; fullscreen; picture-in-picture"
+                      title={products[heroIndex].name}
+                    ></iframe>
+                  )}
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/80 via-transparent to-transparent pointer-events-none"></div>
                 {/* Product info overlay */}

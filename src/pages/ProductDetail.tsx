@@ -53,12 +53,21 @@ const ProductDetail = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-8">
             {/* Product Images */}
             <div className="space-y-4">
-              <div className="aspect-square rounded-xl overflow-hidden">
-                <img
-                  src={product.images[selectedImage]}
-                  alt={product.name}
-                  className="w-full h-full object-cover"
-                />
+              <div className="aspect-square rounded-xl overflow-hidden bg-black">
+                {selectedImage >= product.images.length && product.videoUrls && product.videoUrls[selectedImage - product.images.length] ? (
+                  <iframe 
+                    src={product.videoUrls[selectedImage - product.images.length]} 
+                    className="w-full h-full" 
+                    allow="autoplay; fullscreen; picture-in-picture" 
+                    title={`${product.name} Video`}
+                  ></iframe>
+                ) : (
+                  <img
+                    src={product.images[selectedImage] || product.images[0]}
+                    alt={product.name}
+                    className="w-full h-full object-cover"
+                  />
+                )}
               </div>
               <div className="grid grid-cols-3 gap-4">
                 {product.images.map((image, index) => (
@@ -76,6 +85,27 @@ const ProductDetail = () => {
                     />
                   </button>
                 ))}
+                {product.videoUrls && product.videoUrls.map((videoUrl, idx) => {
+                  const globalIdx = product.images.length + idx;
+                  return (
+                    <button
+                      key={`vid-${idx}`}
+                      onClick={() => setSelectedImage(globalIdx)}
+                      className={`aspect-square rounded-lg overflow-hidden border-2 transition-colors relative ${
+                        selectedImage === globalIdx ? 'border-blue-500' : 'border-gray-200'
+                      }`}
+                    >
+                      {/* An overlay absolutely positioned to capture clicks since iframes swallow pointer events */}
+                      <div className="absolute inset-0 z-10"></div>
+                      <iframe 
+                        src={`${videoUrl}?autoplay=1&muted=1&loop=1&background=1`} 
+                        className="w-full h-full object-cover pointer-events-none" 
+                        allow="autoplay; fullscreen; picture-in-picture" 
+                        title={`${product.name} Video ${idx + 1}`}
+                      ></iframe>
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
@@ -121,9 +151,11 @@ const ProductDetail = () => {
                 )}
               </div>
 
-              <p className="text-lg text-gray-600 leading-relaxed">
-                {product.description}
-              </p>
+              <div className="space-y-6">
+                <p className="text-lg text-gray-600 leading-relaxed">
+                  {product.description}
+                </p>
+              </div>
 
               {/* Quantity & Add to Cart */}
               <div className="flex items-center space-x-4">
@@ -160,7 +192,7 @@ const ProductDetail = () => {
                 </div>
                 <div className="text-center">
                   <Shield className="h-8 w-8 text-green-600 mx-auto mb-2" />
-                  <p className="text-sm font-medium text-gray-900">2 Year Warranty</p>
+                  <p className="text-sm font-medium text-gray-900">1 Year Warranty</p>
                 </div>
                 <div className="text-center">
                   <Truck className="h-8 w-8 text-orange-600 mx-auto mb-2" />

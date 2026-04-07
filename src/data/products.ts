@@ -6,6 +6,7 @@ export interface Product {
   originalPrice?: number;
   image: string;
   images: string[];
+  videoUrls?: string[];
   description: string;
   features: string[];
   specifications: {
@@ -92,6 +93,9 @@ export const products: Product[] = [
     image: 'https://i.postimg.cc/hjHMpFD8/iot-curtains.jpg',
     images: [
       'https://i.postimg.cc/hjHMpFD8/iot-curtains.jpg'
+    ],
+    videoUrls: [
+      'https://fast.wistia.net/embed/iframe/bl7p016v6m'
     ],
     description: 'Want your office/home to be automated through voice ! Try these',
     features: [
@@ -231,6 +235,10 @@ export const products: Product[] = [
     images: [
       'https://i.postimg.cc/J7dwqvZt/electric-scooter-0.jpg'
     ],
+    videoUrls: [
+      'https://fast.wistia.net/embed/iframe/beoejlzm9s',
+      'https://fast.wistia.net/embed/iframe/ip8xard3dv'
+    ],
     description: 'Why Walk When You Can Fly on Wheels? .. Go For It',
     features: [
       'Compact & Lightweight Design',
@@ -263,6 +271,10 @@ export const products: Product[] = [
     image: 'https://i.postimg.cc/0yRBXsQ5/electric-wheel-chair.jpg',
     images: [
       'https://i.postimg.cc/0yRBXsQ5/electric-wheel-chair.jpg'
+    ],
+    videoUrls: [
+      'https://fast.wistia.net/embed/iframe/6rc2apebc1',
+      'https://fast.wistia.net/embed/iframe/7qrjyt7r8g'
     ],
     description: 'Ready to Roll Your Way with Smart Wheel Chair.. Give it a shot! ',
     features: [
