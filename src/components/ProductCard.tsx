@@ -36,7 +36,7 @@ const ProductCard = ({ product, isListView = false }: ProductCardProps) => {
         />
         {product.videoUrls?.[0] && (
           <iframe
-            src={`${product.videoUrls?.[0]}?autoplay=1&muted=1&loop=1&background=1`}
+            src={`${product.videoUrls?.[0]}?autoPlay=true&muted=true&endVideoBehavior=loop&controlsVisibleOnLoad=false`}
             className={`absolute inset-0 w-full h-full object-cover pointer-events-none transition-all duration-1000 group-hover:scale-110 ${
               showVideo ? 'opacity-100' : 'opacity-0 scale-95'
             }`}

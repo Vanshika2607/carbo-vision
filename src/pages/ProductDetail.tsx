@@ -56,7 +56,7 @@ const ProductDetail = () => {
               <div className="aspect-square rounded-xl overflow-hidden bg-black">
                 {selectedImage >= product.images.length && product.videoUrls && product.videoUrls[selectedImage - product.images.length] ? (
                   <iframe 
-                    src={product.videoUrls[selectedImage - product.images.length]} 
+                    src={`${product.videoUrls[selectedImage - product.images.length]}?muted=true`} 
                     className="w-full h-full" 
                     allow="autoplay; fullscreen; picture-in-picture" 
                     title={`${product.name} Video`}
@@ -98,7 +98,7 @@ const ProductDetail = () => {
                       {/* An overlay absolutely positioned to capture clicks since iframes swallow pointer events */}
                       <div className="absolute inset-0 z-10"></div>
                       <iframe 
-                        src={`${videoUrl}?autoplay=1&muted=1&loop=1&background=1`} 
+                        src={`${videoUrl}?autoPlay=true&muted=true&endVideoBehavior=loop&controlsVisibleOnLoad=false`} 
                         className="w-full h-full object-cover pointer-events-none" 
                         allow="autoplay; fullscreen; picture-in-picture" 
                         title={`${product.name} Video ${idx + 1}`}
