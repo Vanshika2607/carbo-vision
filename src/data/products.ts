@@ -29,6 +29,9 @@ export const products: Product[] = [
       'https://i.postimg.cc/x8Cj3WZj/e-bike-0.jpg',
       'https://i.postimg.cc/Bbk3ctDN/e-bike-1.jpg'
     ],
+    videoUrls: [
+      'https://fast.wistia.net/embed/iframe/nd2e8ts3ct'
+    ],
     description: 'Want to get your bike converted into E-BIKE ... Try this !',
 
     features: [
@@ -61,6 +64,9 @@ export const products: Product[] = [
     images: [
       'https://i.postimg.cc/xTgTm9Tz/wheelchair-tricycle-1.jpg',
       'https://i.postimg.cc/3wqkvY1B/wheelchair-tricycle-0.jpg'
+    ],
+    videoUrls: [
+      'https://fast.wistia.net/embed/iframe/j1ytcbb5f1'
     ],
     description: 'Want to buy a unique gift for someone .. Contact Us ',
     features: [
@@ -199,6 +205,9 @@ export const products: Product[] = [
       'https://i.postimg.cc/9MpFB2tK/e-cycle-0.jpg',
       'https://i.postimg.cc/jq1rYC5v/e-cycle-1.jpg'
     ],
+    videoUrls: [
+      'https://fast.wistia.net/embed/iframe/m67oapvyj6'
+    ],
     description: 'Want To Ride Eco-friendly .. Give it a go',
     features: [
        'Lightweight Electric Motor',
@@ -236,8 +245,7 @@ export const products: Product[] = [
       'https://i.postimg.cc/J7dwqvZt/electric-scooter-0.jpg'
     ],
     videoUrls: [
-      'https://fast.wistia.net/embed/iframe/beoejlzm9s',
-      'https://fast.wistia.net/embed/iframe/ip8xard3dv'
+      'https://fast.wistia.net/embed/iframe/tmzu0fo31y'
     ],
     description: 'Why Walk When You Can Fly on Wheels? .. Go For It',
     features: [
