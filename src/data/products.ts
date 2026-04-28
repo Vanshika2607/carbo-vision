@@ -42,6 +42,7 @@ export const products: Product[] = [
       'Eco-Friendly Transportation',
     ],
     specifications: {
+      'Dimensions': '74 * 30 * 44 inches',
       'Motor': '1000W Brushless DC Hub Motor',
 'Battery': '60V / 30Ah Lithium-ion (removable)',
 'Range': '60–80 km per charge',
@@ -78,6 +79,7 @@ export const products: Product[] = [
       'Durable Build for Rural Terrain',
     ],
     specifications: {
+      'Dimensions': '63 * 38 * 72 inches',
       'Power': '100–200W solar panel + 24V/36V battery',
 'Motor': '250W–500W BLDC motor',
 'Range': '30–50 km per charge',
@@ -115,6 +117,7 @@ export const products: Product[] = [
 'Easy Installation & Compatibility',
     ],
     specifications: {
+      'Dimensions': '40 * 12.5 * 55 inches',
       'Motor': 'Quiet DC motor (≤ 40 dB noise)',
 'Control': 'Mobile app + voice (Alexa, Google, Siri)',
 'Connectivity': 'Wi-Fi / Bluetooth / Zigbee',
@@ -148,6 +151,7 @@ export const products: Product[] = [
  'Easy Installation'
     ],
     specifications: {
+      'Dimensions': '12.5 * 1 * 6.5 inches',
       'Display Type': 'LED Matrix',
       'Pixel Pitch': '3mm / 5mm / 10mm (as per model)',
       'Brightness': '≥ 5000 nits (outdoor) / ≥ 1000 nits (indoor)',
@@ -182,6 +186,7 @@ export const products: Product[] = [
       'Enhanced Road Safety'
     ],
     specifications: {
+      'Dimensions': '60 * 20 * 51 inches',
       'Controller': 'ESP32 / Arduino with IoT module',
 'Connectivity': 'Wi-Fi / GSM for real-time control',
 'Sensors': 'Ultrasonic or IR for vehicle detection',
@@ -222,6 +227,7 @@ export const products: Product[] = [
  'Easy Maintenance'
     ],
     specifications: {
+      'Dimensions': '74 * 19 * 39 inches',
       'Motor': '250W brushless hub motor',
 'Battery': '36V, 10.4Ah lithium-ion (removable)',
 'Range': 'Up to 60 km per charge (pedal assist mode)',
@@ -258,6 +264,7 @@ export const products: Product[] = [
       'Eco-Friendly Mobility'
     ],
     specifications: {
+      'Dimensions': '63 * 13.5 * 50 inches',
       'Motor': '250W–350W hub motor',
 'Battery': '36V / 7.5–10Ah lithium-ion battery',
 'Range': '20–40 km per charge',
@@ -296,6 +303,7 @@ export const products: Product[] = [
 'Smart Alerts & Notifications',
     ],
     specifications: {
+      'Dimensions': '22 * 33 * 33 inches',
       'Controller':	'ESP32 / Arduino / Raspberry Pi with IoT capabilities',
 'Connectivity': 'Wi-Fi, Bluetooth, GSM (optional for SMS alerts), GPS',
 'Mobility':	'Motorized wheels, joystick/app-based control', 
@@ -365,6 +373,7 @@ export const products: Product[] = [
       'Easy Maintenance'
     ],
     specifications: {
+      'Dimensions': '14.5 * 12 * 19 inches',
     'Sensors Included': 'Soil Moisture Sensor, Temperature & Humidity Sensor (DHT22), pH Sensor, NPK Sensor (Optional Advanced Version)',
 'Connectivity':'Wi-Fi, GSM Module (SIM800L) for remote areas',
 'GIS Integration':'Google Maps API / Leaflet.js, Field mapping & zone marking',
@@ -401,6 +410,7 @@ features: [
    'Modern and Space-saving Design',
 ],
 specifications: {
+  'Dimensions': '19 * 10 * 13 inches',
   'Display': 'LED / LCD screen behind two-way mirror',
   'Control': 'Voice, touch, or mobile app (Alexa, Google, Siri)',
   'Connectivity': 'Wi-Fi / Bluetooth',
